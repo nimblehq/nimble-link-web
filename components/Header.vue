@@ -64,13 +64,14 @@
                     >
                       Profile
                     </nuxt-link>
-                    <nuxt-link
-                      to="#"
+                    <button
+                      type="button"
                       class="block px-4 py-2 text-sm text-black hover:text-blue focus:text-blue"
                       role="menuitem"
+                      @click="$auth.logout()"
                     >
-                      Sign out
-                    </nuxt-link>
+                      Log out
+                    </button>
                   </div>
                 </div>
               </transition>
@@ -162,12 +163,13 @@
           >
             Profile
           </nuxt-link>
-          <nuxt-link
-            to="#"
+          <button
+            type="button"
             class="block px-3 py-2 rounded-md text-base font-medium text-black hover:text-blue focus:outline-none focus:text-blue"
+            @click="$auth.logout()"
           >
-            Sign out
-          </nuxt-link>
+            Log out
+          </button>
         </div>
       </div>
       <div v-else class="pt-4 pb-3 border-t border-gray-700">
