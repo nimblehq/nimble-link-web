@@ -29,7 +29,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['~assets/css/font.css'],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -44,6 +44,7 @@ export default {
    ** Nuxt.js dev-modules
    */
   buildModules: [
+    '@nuxtjs/composition-api',
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
@@ -58,7 +59,26 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/auth-next',
   ],
+
+  auth: {
+    strategies: {
+      google: {
+        scheme: 'oauth2',
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        endpoints: {
+          authorization: 'https://accounts.google.com/o/oauth2/auth',
+          token: process.env.TOKEN_URL,
+          userInfo: undefined,
+        },
+        scope: ['openid', 'profile', 'email'],
+        responseType: 'code',
+        codeChallengeMethod: 'S256',
+      },
+    },
+  },
+
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
