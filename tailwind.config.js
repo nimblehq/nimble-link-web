@@ -1,11 +1,22 @@
-/*
-** TailwindCSS Configuration File
-**
-** Docs: https://tailwindcss.com/docs/configuration
-** Default: https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js
-*/
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 module.exports = {
-  theme: {},
+  theme: {
+    extend: {
+      colors: {
+        black: {
+          default: '#000',
+          600: 'rgba(0, 0, 0, 0.6)',
+        },
+        blue: {
+          default: '#3759FD',
+        },
+      },
+      fontFamily: {
+        sans: ['AktivGroteskCorp', ...defaultTheme.fontFamily.sans],
+      },
+    },
+  },
   variants: {},
   plugins: [],
   purge: {
@@ -16,7 +27,7 @@ module.exports = {
       'layouts/**/*.vue',
       'pages/**/*.vue',
       'plugins/**/*.js',
-      'nuxt.config.js'
-    ]
-  }
+      'nuxt.config.js',
+    ],
+  },
 }

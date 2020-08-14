@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'AktivGroteskCorp';
+  font-style: normal;
+  font-weight: 400;
+  src: url('~assets/fonts/AktivGroteskCorp-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'AktivGroteskCorp';
+  font-style: normal;
+  font-weight: 500;
+  src: url('~assets/fonts/AktivGroteskCorp-Medium.ttf') format('truetype');
+}
