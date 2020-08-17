@@ -71,7 +71,10 @@ export default {
           authorization: 'https://accounts.google.com/o/oauth2/auth',
           token: `${process.env.AUTHENTICATION_BASE_URL}/storeauthcode`,
           userInfo: `${process.env.AUTHENTICATION_BASE_URL}/userinfo`,
-          logout: `${process.env.AUTHENTICATION_BASE_URL}/logout`,
+          customLogout: {
+            url: `${process.env.AUTHENTICATION_BASE_URL}/logout`,
+            method: 'post',
+          },
         },
         scope: ['openid', 'profile', 'email'],
         responseType: 'code',
