@@ -15,6 +15,10 @@ module.exports = {
       fontFamily: {
         sans: ['AktivGroteskCorp', ...defaultTheme.fontFamily.sans],
       },
+      inset: {
+        '1/2': '50%',
+        ...defaultTheme.inset,
+      },
     },
   },
   variants: {},
