@@ -7,10 +7,10 @@
             <img class="h-4" src="~/assets/images/icons/logo.svg" alt="logo" />
           </nuxt-link>
         </div>
-        <div v-if="$auth.$state.loggedIn" class="hidden md:block">
+        <div v-if="loggedIn" class="hidden md:block">
           <div class="ml-4 flex items-center md:ml-6 font-medium">
             <div>
-              Alex
+              {{ user.email }}
             </div>
 
             <!-- Profile dropdown -->
@@ -24,8 +24,8 @@
                 >
                   <img
                     class="h-10 w-10 rounded-full"
-                    src="https://via.placeholder.com/256/000000/000000"
-                    alt="Avatar"
+                    :src="user.picture"
+                    :alt="user.email"
                   />
                 </button>
               </div>
@@ -59,18 +59,19 @@
                   >
                     <nuxt-link
                       to="#"
-                      class="block px-4 py-2 text-sm text-black hover:text-blue focus:text-blue"
+                      class="block px-4 py-2 font-medium text-sm text-black hover:text-blue focus:text-blue"
                       role="menuitem"
                     >
                       Profile
                     </nuxt-link>
-                    <nuxt-link
-                      to="#"
-                      class="block px-4 py-2 text-sm text-black hover:text-blue focus:text-blue"
+                    <button
+                      type="button"
+                      class="block px-4 py-2 font-medium text-sm text-black hover:text-blue focus:text-blue"
                       role="menuitem"
+                      @click="logout"
                     >
-                      Sign out
-                    </nuxt-link>
+                      Log out
+                    </button>
                   </div>
                 </div>
               </transition>
@@ -134,16 +135,13 @@
       Open: "block", closed: "hidden"
     -->
     <div :class="state.popupOpened ? 'block md:hidden' : 'hidden md:hidden'">
-      <div
-        v-if="$auth.$state.loggedIn"
-        class="pt-4 pb-3 border-t border-gray-700"
-      >
+      <div v-if="loggedIn" class="pt-4 pb-3 border-t border-gray-700">
         <div class="flex items-center px-5">
           <div class="flex-shrink-0">
             <img
               class="h-10 w-10 rounded-full"
-              src="https://via.placeholder.com/256/000000/000000"
-              alt=""
+              :src="user.picture"
+              :alt="user.email"
             />
           </div>
           <div class="ml-3">
@@ -151,7 +149,7 @@
               Alex
             </div>
             <div class="mt-1 text-sm font-medium leading-none text-black">
-              alex@example.com
+              {{ user.email }}
             </div>
           </div>
         </div>
@@ -162,12 +160,13 @@
           >
             Profile
           </nuxt-link>
-          <nuxt-link
-            to="#"
+          <button
+            type="button"
             class="block px-3 py-2 rounded-md text-base font-medium text-black hover:text-blue focus:outline-none focus:text-blue"
+            @click="logout"
           >
-            Sign out
-          </nuxt-link>
+            Log out
+          </button>
         </div>
       </div>
       <div v-else class="pt-4 pb-3 border-t border-gray-700">
@@ -175,7 +174,7 @@
           <button
             type="button"
             class="block px-3 py-2 rounded-md text-base font-medium text-black hover:text-blue focus:outline-none focus:text-blue"
-            @click="$auth.loginWith('google')"
+            @click="login"
           >
             Login
           </button>
@@ -186,7 +185,7 @@
 </template>
 
 <script>
-import { reactive } from '@nuxtjs/composition-api'
+import { reactive, computed, useContext } from '@nuxtjs/composition-api'
 
 export default {
   name: 'Header',
@@ -200,9 +199,39 @@ export default {
       state.popupOpened = !state.popupOpened
     }
 
+    const { $auth } = useContext()
+
+    const user = computed(() => {
+      return $auth.user
+    })
+
+    const loggedIn = computed(() => {
+      return $auth.loggedIn
+    })
+
+    const login = () => {
+      $auth.loginWith('google')
+    }
+
+    const logout = async () => {
+      state.popupOpened = false
+
+      await $auth.requestWith(
+        'google',
+        {},
+        $auth.strategies.google.options.endpoints.logout
+      )
+
+      $auth.reset()
+    }
+
     return {
       state,
       togglePopup,
+      user,
+      loggedIn,
+      login,
+      logout,
     }
   },
 }

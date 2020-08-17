@@ -69,8 +69,9 @@ export default {
         clientId: process.env.GOOGLE_CLIENT_ID,
         endpoints: {
           authorization: 'https://accounts.google.com/o/oauth2/auth',
-          token: process.env.TOKEN_URL,
-          userInfo: undefined,
+          token: `${process.env.AUTHENTICATION_BASE_URL}/storeauthcode`,
+          userInfo: `${process.env.AUTHENTICATION_BASE_URL}/userinfo`,
+          logout: `${process.env.AUTHENTICATION_BASE_URL}/logout`,
         },
         scope: ['openid', 'profile', 'email'],
         responseType: 'code',
