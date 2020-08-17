@@ -1,14 +1,13 @@
 <template>
   <div>
-    <Nuxt />
+    <Header />
   </div>
 </template>
+
 <script>
 export default {
-  head() {
-    return {
-      title: 'Nimble Link',
-    }
+  setup(_, context) {
+    context.root.$router.push('/')
   },
 }
 </script>

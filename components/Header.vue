@@ -64,14 +64,14 @@
                     >
                       Profile
                     </nuxt-link>
-                    <button
-                      type="button"
+                    <nuxt-link
+                      to="#"
                       class="block px-4 py-2 font-medium text-sm text-black hover:text-blue focus:text-blue"
                       role="menuitem"
-                      @click="logout"
+                      @click.native="logout"
                     >
-                      Log out
-                    </button>
+                      Logout
+                    </nuxt-link>
                   </div>
                 </div>
               </transition>
@@ -160,13 +160,13 @@
           >
             Profile
           </nuxt-link>
-          <button
-            type="button"
+          <nuxt-link
+            to="#"
             class="block px-3 py-2 rounded-md text-base font-medium text-black hover:text-blue focus:outline-none focus:text-blue"
-            @click="logout"
+            @click.native="logout"
           >
-            Log out
-          </button>
+            Logout
+          </nuxt-link>
         </div>
       </div>
       <div v-else class="pt-4 pb-3 border-t border-gray-700">
