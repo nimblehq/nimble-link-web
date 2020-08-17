@@ -219,7 +219,7 @@ export default {
       await $auth.requestWith(
         'google',
         {},
-        $auth.strategies.google.options.endpoints.logout
+        $auth.strategies.google.options.endpoints.customLogout
       )
 
       $auth.reset()
