@@ -87,7 +87,9 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    baseURL: `${process.env.API_BASE_URL}/api/v1`,
+  },
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
