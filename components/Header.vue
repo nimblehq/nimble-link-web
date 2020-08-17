@@ -48,7 +48,7 @@
                 leave-to-class="transform opacity-0 scale-95"
               >
                 <div
-                  v-if="state.popupOpened"
+                  v-if="popupOpened"
                   class="origin-top-right absolute right-0 mt-2 w-48 rounded shadow-lg border-black border-2"
                 >
                   <div
@@ -64,14 +64,14 @@
                     >
                       Profile
                     </nuxt-link>
-                    <button
-                      type="button"
+                    <nuxt-link
+                      to="#"
                       class="block px-4 py-2 font-medium text-sm text-black hover:text-blue focus:text-blue"
                       role="menuitem"
-                      @click="logout"
+                      @click.native="logout"
                     >
-                      Log out
-                    </button>
+                      Logout
+                    </nuxt-link>
                   </div>
                 </div>
               </transition>
@@ -93,7 +93,7 @@
           <!-- Mobile menu button -->
           <button
             class="inline-flex items-center justify-center p-2 rounded-md text-black hover:text-blue focus:outline-none"
-            :class="{ 'text-blue': state.popupOpened }"
+            :class="{ 'text-blue': popupOpened }"
             @click="togglePopup"
           >
             <!-- Menu open: "hidden", Menu closed: "block" -->
@@ -134,7 +134,7 @@
 
       Open: "block", closed: "hidden"
     -->
-    <div :class="state.popupOpened ? 'block md:hidden' : 'hidden md:hidden'">
+    <div :class="popupOpened ? 'block md:hidden' : 'hidden md:hidden'">
       <div v-if="loggedIn" class="pt-4 pb-3 border-t border-gray-700">
         <div class="flex items-center px-5">
           <div class="flex-shrink-0">
@@ -160,13 +160,13 @@
           >
             Profile
           </nuxt-link>
-          <button
-            type="button"
+          <nuxt-link
+            to="#"
             class="block px-3 py-2 rounded-md text-base font-medium text-black hover:text-blue focus:outline-none focus:text-blue"
-            @click="logout"
+            @click.native="logout"
           >
-            Log out
-          </button>
+            Logout
+          </nuxt-link>
         </div>
       </div>
       <div v-else class="pt-4 pb-3 border-t border-gray-700">
@@ -185,48 +185,18 @@
 </template>
 
 <script>
-import { reactive, computed, useContext } from '@nuxtjs/composition-api'
+import useProfilePopup from '../composables/useProfilePopup'
+import useAuth from '../composables/useAuth'
 
 export default {
   name: 'Header',
 
   setup() {
-    const state = reactive({
-      popupOpened: 0,
-    })
-
-    const togglePopup = () => {
-      state.popupOpened = !state.popupOpened
-    }
-
-    const { $auth } = useContext()
-
-    const user = computed(() => {
-      return $auth.user
-    })
-
-    const loggedIn = computed(() => {
-      return $auth.loggedIn
-    })
-
-    const login = () => {
-      $auth.loginWith('google')
-    }
-
-    const logout = async () => {
-      state.popupOpened = false
-
-      await $auth.requestWith(
-        'google',
-        {},
-        $auth.strategies.google.options.endpoints.customLogout
-      )
-
-      $auth.reset()
-    }
+    const { popupOpened, togglePopup } = useProfilePopup()
+    const { user, loggedIn, login, logout } = useAuth()
 
     return {
-      state,
+      popupOpened,
       togglePopup,
       user,
       loggedIn,
