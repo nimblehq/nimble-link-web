@@ -11,7 +11,7 @@ export default function usePasswordPopup() {
     state.passwordCopied = true
   }
 
-  const togglePasswordPopup = (value) => {
+  const openPasswordPopup = (value) => {
     if (typeof value === 'string') {
       state.passwordPopupOpened = true
       state.displayedPassword = value
@@ -25,7 +25,7 @@ export default function usePasswordPopup() {
 
   return {
     ...toRefs(state),
-    togglePasswordPopup,
+    openPasswordPopup,
     copySuccessed,
   }
 }

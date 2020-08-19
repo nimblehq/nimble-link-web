@@ -15,16 +15,16 @@
         <tr v-for="link in links" :key="link.id" class="border-b h-20">
           <td class="text-left">
             <a
-              :href="`https://namtx.dev/${link.alias}`"
+              :href="`${$config.shortLinkDomain}${link.alias}`"
               class="text-blue leading-5"
-              >https://namtx.dev/{{ link.alias }}</a
+              >{{ `${$config.shortLinkDomain}${link.alias}` }}</a
             >
             <p class="leading-6">{{ link.original_url }}</p>
           </td>
           <td class="text-right">
             <button
               class="border-2 w-16 h-8 border-blue text-blue rounded"
-              @click="togglePasswordPopup(link.password)"
+              @click="openPasswordPopup(link.password)"
             >
               View
             </button>
@@ -36,15 +36,24 @@
             {{ link.created_at | diffForHumans }}
           </td>
           <td class="text-right">
-            Delete
+            <button
+              v-clipboard:copy="`${$config.shortLinkDomain}${link.alias}`"
+              v-clipboard:success="copySuccessed"
+              class="border-2 w-16 h-8 border-blue text-blue rounded"
+            >
+              Copy
+            </button>
+            <button class="border-2 w-8 h-8 border-blue text-blue rounded">
+              ...
+            </button>
           </td>
         </tr>
       </tbody>
     </table>
 
     <div
-      class="fixed bottom-0 px-4 pb-4 sm:flex sm:items-center sm:justify-center"
-      :class="{ 'insert-0 sm:inset-0': passwordPopupOpened }"
+      :class="passwordPopupOpened ? 'scale-100' : 'delay-300 scale-0'"
+      class="transform fixed bottom-0 inset-x-0 sm:inset-0 px-4 pb-4 sm:flex sm:items-center sm:justify-center"
     >
       <!--
     Background overlay, show/hide based on modal state.
@@ -57,20 +66,21 @@
       To: "opacity-0"
   -->
       <transition
-        enter-active-class="transition ease-out duration-300"
-        enter-class="transform opacity-0"
-        enter-to-class="transform opacity-100"
-        leave-active-class="transition ease-in duration-200"
-        leave-class="transform opacity-100"
-        leave-to-class="transform opacity-0"
+        enter-active-class="ease-out duration-300"
+        enter-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="ease-in duration-200"
+        leave-class="opacity-100"
+        leave-to-class="opacity-0"
       >
         <div
           v-if="passwordPopupOpened"
           class="fixed inset-0 transition-opacity"
-          @click="togglePasswordPopup"
+          @click="openPasswordPopup"
         >
           <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
         </div>
+        `
       </transition>
       <!--
     Modal panel, show/hide based on modal state.
@@ -84,14 +94,14 @@
   -->
       <transition
         enter-active-class="ease-out duration-300"
-        enter-class="opacity-0 scale-95"
+        enter-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         enter-to-class="opacity-100 translate-y-0 sm:scale-100"
         leave-active-class="ease-in duration-200"
-        leave-class="opacity-100 translate-y-4 sm:scale-100"
+        leave-class="opacity-100 translate-y-0 sm:scale-100"
         leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
       >
         <div
-          v-if="passwordPopupOpened"
+          v-if="openPasswordPopup"
           class="bg-white overflow-hidden transform transition-all shadow-xl sm:max-w-lg sm:w-full"
           role="dialog"
           aria-modal="true"
@@ -106,7 +116,7 @@
                 class="h-4 cursor-pointer"
                 src="~/assets/images/icons/close.svg"
                 alt="logo"
-                @click="togglePasswordPopup"
+                @click="openPasswordPopup"
               />
             </div>
             <div class="flex p-10 flex-col">
@@ -144,12 +154,13 @@ export default {
   setup() {
     dayjs.extend(relativeTime)
     const { links, fetchLinks } = useLinks()
+
     const {
-      passwordPopupOpened,
+      openPasswordPopup,
       displayedPassword,
-      togglePasswordPopup,
       passwordCopied,
       copySuccessed,
+      passwordPopupOpened,
     } = usePasswordPopup()
 
     useFetch(fetchLinks)
@@ -159,8 +170,8 @@ export default {
       copySuccessed,
       displayedPassword,
       links,
+      openPasswordPopup,
       passwordPopupOpened,
-      togglePasswordPopup,
     }
   },
   filters: {

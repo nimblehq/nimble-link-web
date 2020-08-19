@@ -96,4 +96,7 @@ export default {
    ** See https://nuxtjs.org/api/configuration-build/
    */
   build: {},
+  publicRuntimeConfig: {
+    shortLinkDomain: 'https://namtx.dev/',
+  },
 }
