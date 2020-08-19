@@ -60,6 +60,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
+    'nuxt-clipboard2',
   ],
 
   auth: {
