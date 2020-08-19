@@ -8,7 +8,7 @@
     leave-to-class="opacity-0"
   >
     <div
-      v-if="passwordPopupOpened"
+      v-if="passworddropdownOpened"
       class="fixed bottom-0 inset-x-0 sm:inset-0 px-4 pb-4 sm:flex sm:items-center sm:justify-center"
     >
       <div class="fixed inset-0 transition-opacity" @click="closePasswordPopup">
@@ -72,7 +72,7 @@ export default {
   setup() {
     const {
       displayedPassword,
-      passwordPopupOpened,
+      passworddropdownOpened,
       passwordCopied,
       openPasswordPopup,
       closePasswordPopup,
@@ -80,7 +80,7 @@ export default {
     } = usePasswordPopup()
     return {
       displayedPassword,
-      passwordPopupOpened,
+      passworddropdownOpened,
       passwordCopied,
       openPasswordPopup,
       closePasswordPopup,

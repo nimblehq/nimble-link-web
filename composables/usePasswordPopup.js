@@ -2,7 +2,7 @@ import { toRefs, reactive } from '@nuxtjs/composition-api'
 
 const state = reactive({
   displayedPassword: '',
-  passwordPopupOpened: false,
+  passworddropdownOpened: false,
   passwordCopied: false,
 })
 
@@ -12,14 +12,14 @@ export default function usePasswordPopup() {
   }
 
   const closePasswordPopup = () => {
-    state.passwordPopupOpened = false
+    state.passworddropdownOpened = false
     state.displayedPassword = ''
     state.passwordCopied = false
   }
 
   const openPasswordPopup = (value) => {
     if (typeof value === 'string') {
-      state.passwordPopupOpened = true
+      state.passworddropdownOpened = true
       state.displayedPassword = value
       state.passwordCopied = false
     } else {

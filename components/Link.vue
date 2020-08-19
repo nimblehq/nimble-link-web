@@ -32,7 +32,7 @@
       </button>
       <button
         class="border-2 w-8 h-8 border-blue text-blue rounded"
-        @click="togglePopup"
+        @click="toggleDropdown"
       >
         ...
       </button>
@@ -44,33 +44,26 @@
         leave-class="transform opacity-100 scale-100"
         leave-to-class="transform opacity-0 scale-95"
       >
-        <div
-          v-if="popupOpened"
-          class="origin-top-right absolute right-0 mt-2 w-48 rounded shadow-lg border-black border-2"
+        <Dropdown
+          class="right-8"
+          :is-opened="dropdownOpened"
+          :toggle-function="toggleDropdown"
         >
-          <div
-            class="py-1 rounded-md bg-white shadow-xs text-left"
-            role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="user-menu"
+          <nuxt-link
+            to="#"
+            class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue"
+            role="menuitem"
           >
-            <nuxt-link
-              to="#"
-              class="block px-4 py-2 font-medium text-sm text-black hover:text-blue focus:text-blue"
-              role="menuitem"
-            >
-              Edit
-            </nuxt-link>
-            <nuxt-link
-              to="#"
-              class="block px-4 py-2 font-medium text-sm text-black hover:text-blue focus:text-blue"
-              role="menuitem"
-              @click.native="logout"
-            >
-              Delete
-            </nuxt-link>
-          </div>
-        </div>
+            Edit
+          </nuxt-link>
+          <nuxt-link
+            to="#"
+            class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue"
+            role="menuitem"
+          >
+            Delete
+          </nuxt-link>
+        </Dropdown>
       </transition>
     </td>
   </tr>
@@ -81,7 +74,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 
 import useCopy from '@/composables/useCopy'
-import useProfilePopup from '@/composables/useProfilePopup'
+import useDropdown from '@/composables/useDropdown'
 import usePasswordPopup from '@/composables/usePasswordPopup'
 
 export default {
@@ -89,14 +82,14 @@ export default {
     dayjs.extend(relativeTime)
 
     const { copied, copySuccessed } = useCopy()
-    const { togglePopup, popupOpened } = useProfilePopup()
+    const { toggleDropdown, dropdownOpened } = useDropdown()
     const { openPasswordPopup } = usePasswordPopup()
 
     return {
       copied,
       copySuccessed,
-      togglePopup,
-      popupOpened,
+      toggleDropdown,
+      dropdownOpened,
       openPasswordPopup,
     }
   },

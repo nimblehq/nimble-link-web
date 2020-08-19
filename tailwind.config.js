@@ -17,6 +17,7 @@ module.exports = {
       },
       inset: {
         '1/2': '50%',
+        8: '32px',
         ...defaultTheme.inset,
       },
     },
