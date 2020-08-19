@@ -10,11 +10,15 @@
     </td>
     <td class="text-right">
       <button
+        v-if="password"
         class="border-2 w-16 h-8 border-blue text-blue rounded"
         @click="openPasswordPopup(password)"
       >
         View
       </button>
+      <div v-else class="">
+        No
+      </div>
     </td>
     <td class="text-right">
       {{ counter }}
