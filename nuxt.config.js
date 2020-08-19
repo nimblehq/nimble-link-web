@@ -34,7 +34,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [],
+  plugins: [{ src: '@/plugins/vClickOutside', ssr: false }],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -60,6 +60,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
+    'nuxt-clipboard2',
   ],
 
   auth: {
@@ -87,10 +88,15 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    baseURL: `${process.env.API_BASE_URL}/api/v1`,
+  },
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
   build: {},
+  publicRuntimeConfig: {
+    shortLinkDomain: 'https://namtx.dev/',
+  },
 }

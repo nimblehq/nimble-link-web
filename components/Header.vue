@@ -15,7 +15,7 @@
 
             <!-- Profile dropdown -->
             <div class="ml-4 relative">
-              <div @click="togglePopup">
+              <div @click="toggleDropdown">
                 <button
                   id="user-menu"
                   class="max-w-xs flex items-center text-sm rounded-full text-white focus:outline-none focus:shadow-solid"
@@ -29,52 +29,26 @@
                   />
                 </button>
               </div>
-              <!--
-                Profile dropdown panel, show/hide based on dropdown state.
-
-                Entering: "transition ease-out duration-100"
-                  From: "transform opacity-0 scale-95"
-                  To: "transform opacity-100 scale-100"
-                Leaving: "transition ease-in duration-75"
-                  From: "transform opacity-100 scale-100"
-                  To: "transform opacity-0 scale-95"
-              -->
-              <transition
-                enter-active-class="transition ease-out duration-100"
-                enter-class="transform opacity-0 scale-95"
-                enter-to-class="transform opacity-100 scale-100"
-                leave-active-class="transition ease-in duration-75"
-                leave-class="transform opacity-100 scale-100"
-                leave-to-class="transform opacity-0 scale-95"
+              <Dropdown
+                :is-opened="dropdownOpened"
+                :toggle-function="toggleDropdown"
               >
-                <div
-                  v-if="popupOpened"
-                  class="origin-top-right absolute right-0 mt-2 w-48 rounded shadow-lg border-black border-2"
+                <nuxt-link
+                  to="#"
+                  class="block px-4 py-2 font-medium text-sm text-black hover:text-blue focus:text-blue"
+                  role="menuitem"
                 >
-                  <div
-                    class="py-1 rounded-md bg-white shadow-xs"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="user-menu"
-                  >
-                    <nuxt-link
-                      to="#"
-                      class="block px-4 py-2 font-medium text-sm text-black hover:text-blue focus:text-blue"
-                      role="menuitem"
-                    >
-                      Profile
-                    </nuxt-link>
-                    <nuxt-link
-                      to="#"
-                      class="block px-4 py-2 font-medium text-sm text-black hover:text-blue focus:text-blue"
-                      role="menuitem"
-                      @click.native="logout"
-                    >
-                      Logout
-                    </nuxt-link>
-                  </div>
-                </div>
-              </transition>
+                  Profile
+                </nuxt-link>
+                <nuxt-link
+                  to="#"
+                  class="block px-4 py-2 font-medium text-sm text-black hover:text-blue focus:text-blue"
+                  role="menuitem"
+                  @click.native="logout"
+                >
+                  Logout
+                </nuxt-link>
+              </Dropdown>
             </div>
           </div>
         </div>
@@ -93,8 +67,8 @@
           <!-- Mobile menu button -->
           <button
             class="inline-flex items-center justify-center p-2 rounded-md text-black hover:text-blue focus:outline-none"
-            :class="{ 'text-blue': popupOpened }"
-            @click="togglePopup"
+            :class="{ 'text-blue': dropdownOpened }"
+            @click="toggleDropdown"
           >
             <!-- Menu open: "hidden", Menu closed: "block" -->
             <svg
@@ -134,7 +108,7 @@
 
       Open: "block", closed: "hidden"
     -->
-    <div :class="popupOpened ? 'block md:hidden' : 'hidden md:hidden'">
+    <div :class="dropdownOpened ? 'block md:hidden' : 'hidden md:hidden'">
       <div v-if="loggedIn" class="pt-4 pb-3 border-t border-gray-700">
         <div class="flex items-center px-5">
           <div class="flex-shrink-0">
@@ -185,19 +159,19 @@
 </template>
 
 <script>
-import useProfilePopup from '../composables/useProfilePopup'
+import useDropdown from '../composables/useDropdown'
 import useAuth from '../composables/useAuth'
 
 export default {
   name: 'Header',
 
   setup() {
-    const { popupOpened, togglePopup } = useProfilePopup()
+    const { dropdownOpened, toggleDropdown } = useDropdown()
     const { user, loggedIn, login, logout } = useAuth()
 
     return {
-      popupOpened,
-      togglePopup,
+      dropdownOpened,
+      toggleDropdown,
       user,
       loggedIn,
       login,
