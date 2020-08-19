@@ -6,7 +6,9 @@
         class="text-blue leading-5"
         >{{ `${$config.shortLinkDomain}${alias}` }}</a
       >
-      <p class="leading-6">{{ originalUrl }}</p>
+      <p class="leading-6 truncate max-w-lg break-all break-words">
+        {{ originalUrl }}
+      </p>
     </td>
     <td class="text-right">
       <button
@@ -60,13 +62,13 @@
           >
             Edit
           </nuxt-link>
-          <nuxt-link
-            to="#"
+          <p
             class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue"
             role="menuitem"
+            @click="toggleConfirmation(id)"
           >
             Delete
-          </nuxt-link>
+          </p>
         </Dropdown>
       </transition>
     </td>
@@ -80,6 +82,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import useCopy from '@/composables/useCopy'
 import useDropdown from '@/composables/useDropdown'
 import usePasswordPopup from '@/composables/usePasswordPopup'
+import useConfirmation from '@/composables/useConfirmation'
 
 export default {
   setup() {
@@ -88,6 +91,7 @@ export default {
     const { copied, copySuccessed } = useCopy()
     const { toggleDropdown, dropdownOpened } = useDropdown()
     const { openPasswordPopup } = usePasswordPopup()
+    const { toggleConfirmation } = useConfirmation()
 
     return {
       copied,
@@ -95,6 +99,7 @@ export default {
       toggleDropdown,
       dropdownOpened,
       openPasswordPopup,
+      toggleConfirmation,
     }
   },
   filters: {

@@ -17,8 +17,18 @@ export default function useLinks() {
       .catch((_error) => {})
   }
 
+  const deleteLink = async (id) => {
+    await $axios
+      .delete(`/links/${id}`)
+      .then(({ data }) => {
+        state.links = state.links.filter((link) => link.id !== id)
+      })
+      .catch((_error) => {})
+  }
+
   return {
     ...toRefs(state),
     fetchLinks,
+    deleteLink,
   }
 }
