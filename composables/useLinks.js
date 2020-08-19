@@ -1,4 +1,5 @@
 import { reactive, useContext, toRefs } from '@nuxtjs/composition-api'
+import humps from 'humps'
 
 export default function useLinks() {
   const state = reactive({
@@ -11,7 +12,7 @@ export default function useLinks() {
     await $axios
       .get('/links')
       .then(({ data }) => {
-        state.links = data
+        state.links = humps.camelizeKeys(data)
       })
       .catch((_error) => {})
   }

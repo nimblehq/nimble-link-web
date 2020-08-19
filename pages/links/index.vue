@@ -11,43 +11,13 @@
           <th class="text-right font-normal">ACTION</th>
         </tr>
       </thead>
-      <tbody class="">
-        <tr v-for="link in links" :key="link.id" class="border-b h-20">
-          <td class="text-left">
-            <a
-              :href="`${$config.shortLinkDomain}${link.alias}`"
-              class="text-blue leading-5"
-              >{{ `${$config.shortLinkDomain}${link.alias}` }}</a
-            >
-            <p class="leading-6">{{ link.original_url }}</p>
-          </td>
-          <td class="text-right">
-            <button
-              class="border-2 w-16 h-8 border-blue text-blue rounded"
-              @click="openPasswordPopup(link.password)"
-            >
-              View
-            </button>
-          </td>
-          <td class="text-right">
-            {{ link.counter }}
-          </td>
-          <td class="text-right">
-            {{ link.created_at | diffForHumans }}
-          </td>
-          <td class="text-right">
-            <button
-              v-clipboard:copy="`${$config.shortLinkDomain}${link.alias}`"
-              v-clipboard:success="copySuccessed"
-              class="border-2 w-16 h-8 border-blue text-blue rounded"
-            >
-              Copy
-            </button>
-            <button class="border-2 w-8 h-8 border-blue text-blue rounded">
-              ...
-            </button>
-          </td>
-        </tr>
+      <tbody>
+        <Link
+          v-for="link in links"
+          :key="link.id"
+          v-bind="link"
+          @show-password="openPasswordPopup(link.password)"
+        />
       </tbody>
     </table>
 
@@ -144,15 +114,13 @@
 
 <script>
 import { useFetch } from '@nuxtjs/composition-api'
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
+
 import useLinks from '@/composables/useLinks'
 import usePasswordPopup from '@/composables/usePasswordPopup'
 
 export default {
   middleware: ['auth'],
   setup() {
-    dayjs.extend(relativeTime)
     const { links, fetchLinks } = useLinks()
 
     const {
@@ -173,15 +141,6 @@ export default {
       openPasswordPopup,
       passwordPopupOpened,
     }
-  },
-  filters: {
-    diffForHumans: (date) => {
-      if (!date) {
-        return null
-      }
-
-      return dayjs(date).fromNow()
-    },
   },
 }
 </script>
