@@ -10,7 +10,7 @@
     <div
       v-if="isOpened"
       v-click-outside="toggleFunction"
-      class="origin-top-right absolute right-0 mt-2 w-48 rounded shadow-lg border-black border-2"
+      class="origin-top-right absolute right-0 mt-2 w-32 rounded shadow-lg border-black border-2 z-10"
     >
       <div
         class="py-1 rounded-md bg-white shadow-xs"

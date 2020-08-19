@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
     <h1 v-if="links.length > 0" class="mb-4 font-bold text-large leading-9">
       Total {{ links.length }} links
     </h1>

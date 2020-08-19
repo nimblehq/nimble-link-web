@@ -1,6 +1,6 @@
 <template>
   <nav class="bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
           <nuxt-link class="flex-shrink-0" to="/">
@@ -34,11 +34,11 @@
                 :toggle-function="toggleDropdown"
               >
                 <nuxt-link
-                  to="#"
+                  to="/links"
                   class="block px-4 py-2 font-medium text-sm text-black hover:text-blue focus:text-blue"
                   role="menuitem"
                 >
-                  Profile
+                  Links
                 </nuxt-link>
                 <nuxt-link
                   to="#"
@@ -129,10 +129,10 @@
         </div>
         <div class="mt-3 px-2">
           <nuxt-link
-            to="#"
+            to="/links"
             class="block px-3 py-2 rounded-md text-base font-medium text-black hover:text-blue focus:outline-none focus:text-blue"
           >
-            Profile
+            Links
           </nuxt-link>
           <nuxt-link
             to="#"

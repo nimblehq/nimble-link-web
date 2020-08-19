@@ -61,6 +61,7 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/auth-next',
     'nuxt-clipboard2',
+    '@nuxtjs/svg',
   ],
 
   auth: {
@@ -97,6 +98,6 @@ export default {
    */
   build: {},
   publicRuntimeConfig: {
-    shortLinkDomain: 'https://namtx.dev/',
+    shortLinkDomain: process.env.API_BASE_URL || 'https://namtx.dev',
   },
 }

@@ -2,10 +2,14 @@
   <tr class="border-b h-20">
     <td class="text-left">
       <a
-        :href="`${$config.shortLinkDomain}${alias}`"
+        :href="shortLinkURL"
         class="text-blue leading-5"
-        >{{ `${$config.shortLinkDomain}${alias}` }}</a
+        target="_blank"
+        rel="noreferrer"
       >
+        {{ shortLinkURL }}
+        <ExternalLinkIcon class="inline" />
+      </a>
       <p class="leading-6 truncate max-w-lg break-all break-words">
         {{ originalUrl }}
       </p>
@@ -29,48 +33,49 @@
       {{ createdAt | diffForHumans }}
     </td>
     <td class="text-right">
-      <button
-        v-clipboard:copy="`${$config.shortLinkDomain}${alias}`"
-        v-clipboard:success="copySuccessed"
-        class="border-2 w-16 h-8 border-blue text-blue rounded"
-      >
-        {{ copied ? 'Copied' : 'Copy' }}
-      </button>
-      <button
-        class="border-2 w-8 h-8 border-blue text-blue rounded"
-        @click="toggleDropdown"
-      >
-        ...
-      </button>
-      <transition
-        enter-active-class="transition ease-out duration-100"
-        enter-class="transform opacity-0 scale-95"
-        enter-to-class="transform opacity-100 scale-100"
-        leave-active-class="transition ease-in duration-75"
-        leave-class="transform opacity-100 scale-100"
-        leave-to-class="transform opacity-0 scale-95"
-      >
-        <Dropdown
-          class="right-8"
-          :is-opened="dropdownOpened"
-          :toggle-function="toggleDropdown"
+      <div class="relative">
+        <button
+          v-clipboard:copy="shortLinkURL"
+          v-clipboard:success="copySuccessed"
+          class="border-2 w-16 h-8 border-blue text-blue rounded"
         >
-          <nuxt-link
-            to="#"
-            class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue"
-            role="menuitem"
+          {{ copied ? 'Copied' : 'Copy' }}
+        </button>
+        <button
+          class="border-2 w-8 h-8 border-blue text-blue rounded"
+          @click="toggleDropdown"
+        >
+          ...
+        </button>
+        <transition
+          enter-active-class="transition ease-out duration-100"
+          enter-class="transform opacity-0 scale-95"
+          enter-to-class="transform opacity-100 scale-100"
+          leave-active-class="transition ease-in duration-75"
+          leave-class="transform opacity-100 scale-100"
+          leave-to-class="transform opacity-0 scale-95"
+        >
+          <Dropdown
+            :is-opened="dropdownOpened"
+            :toggle-function="toggleDropdown"
           >
-            Edit
-          </nuxt-link>
-          <p
-            class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue"
-            role="menuitem"
-            @click="toggleConfirmation(id)"
-          >
-            Delete
-          </p>
-        </Dropdown>
-      </transition>
+            <nuxt-link
+              to="#"
+              class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue"
+              role="menuitem"
+            >
+              Edit
+            </nuxt-link>
+            <p
+              class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue cursor-pointer"
+              role="menuitem"
+              @click="toggleConfirmation(id)"
+            >
+              Delete
+            </p>
+          </Dropdown>
+        </transition>
+      </div>
     </td>
   </tr>
 </template>
@@ -79,13 +84,21 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 
+import { computed, useContext } from '@nuxtjs/composition-api'
+
 import useCopy from '@/composables/useCopy'
 import useDropdown from '@/composables/useDropdown'
 import usePasswordPopup from '@/composables/usePasswordPopup'
 import useConfirmation from '@/composables/useConfirmation'
 
+import ExternalLinkIcon from '~/assets/images/icons/external-link.svg?inline'
+
 export default {
-  setup() {
+  components: {
+    ExternalLinkIcon,
+  },
+
+  setup(props) {
     dayjs.extend(relativeTime)
 
     const { copied, copySuccessed } = useCopy()
@@ -93,7 +106,14 @@ export default {
     const { openPasswordPopup } = usePasswordPopup()
     const { toggleConfirmation } = useConfirmation()
 
+    const { $config } = useContext()
+
+    const shortLinkURL = computed(() => {
+      return `${$config.shortLinkDomain}/${props.alias}`
+    })
+
     return {
+      shortLinkURL,
       copied,
       copySuccessed,
       toggleDropdown,
