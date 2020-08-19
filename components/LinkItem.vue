@@ -2,10 +2,14 @@
   <tr class="border-b h-20">
     <td class="text-left">
       <a
-        :href="`${$config.shortLinkDomain}${alias}`"
+        :href="shortLinkURL"
         class="text-blue leading-5"
-        >{{ `${$config.shortLinkDomain}${alias}` }}</a
+        target="_blank"
+        rel="noreferrer"
       >
+        {{ shortLinkURL }}
+        <ExternalLinkIcon class="inline" />
+      </a>
       <p class="leading-6 truncate max-w-lg break-all break-words">
         {{ originalUrl }}
       </p>
@@ -31,7 +35,7 @@
     <td class="text-right">
       <div class="relative">
         <button
-          v-clipboard:copy="`${$config.shortLinkDomain}${alias}`"
+          v-clipboard:copy="shortLinkURL"
           v-clipboard:success="copySuccessed"
           class="border-2 w-16 h-8 border-blue text-blue rounded"
         >
@@ -80,13 +84,21 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 
+import { computed, useContext } from '@nuxtjs/composition-api'
+
 import useCopy from '@/composables/useCopy'
 import useDropdown from '@/composables/useDropdown'
 import usePasswordPopup from '@/composables/usePasswordPopup'
 import useConfirmation from '@/composables/useConfirmation'
 
+import ExternalLinkIcon from '~/assets/images/icons/external-link.svg?inline'
+
 export default {
-  setup() {
+  components: {
+    ExternalLinkIcon,
+  },
+
+  setup(props) {
     dayjs.extend(relativeTime)
 
     const { copied, copySuccessed } = useCopy()
@@ -94,7 +106,14 @@ export default {
     const { openPasswordPopup } = usePasswordPopup()
     const { toggleConfirmation } = useConfirmation()
 
+    const { $config } = useContext()
+
+    const shortLinkURL = computed(() => {
+      return `${$config.shortLinkDomain}/${props.alias}`
+    })
+
     return {
+      shortLinkURL,
       copied,
       copySuccessed,
       toggleDropdown,
