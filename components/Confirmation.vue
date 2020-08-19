@@ -39,7 +39,7 @@
               <div class="flex flex-row justify-end">
                 <button
                   class="border-2 bg-blue text-white -16 h-8 border-blue mr-4 rounded px-4"
-                  @click="toggleConfirmation"
+                  @click="cancel"
                 >
                   Cancel
                 </button>
@@ -67,12 +67,14 @@ export default {
   setup() {
     const {
       confirm,
+      cancel,
       params,
       toggleConfirmation,
       confirmationOpened,
     } = useConfirmation()
     return {
       confirm,
+      cancel,
       params,
       confirmationOpened,
       toggleConfirmation,

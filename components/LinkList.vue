@@ -19,7 +19,7 @@
     </table>
 
     <PasswordPopup />
-    <DeleteConfirmation :confirm-callback-function="deleteLink" />
+    <Confirmation :confirm-callback-function="deleteLink" />
   </div>
 </template>
 

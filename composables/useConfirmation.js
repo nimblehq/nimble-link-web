@@ -1,8 +1,6 @@
 import { toRefs, reactive } from '@nuxtjs/composition-api'
 
 const state = reactive({
-  confirmed: false,
-  cancelled: false,
   confirmationOpened: false,
   params: null,
 })
@@ -20,9 +18,14 @@ export default function useConfirmation() {
     }
   }
 
+  const cancel = () => {
+    toggleConfirmation()
+  }
+
   return {
     ...toRefs(state),
     confirm,
+    cancel,
     toggleConfirmation,
   }
 }
