@@ -29,48 +29,49 @@
       {{ createdAt | diffForHumans }}
     </td>
     <td class="text-right">
-      <button
-        v-clipboard:copy="`${$config.shortLinkDomain}${alias}`"
-        v-clipboard:success="copySuccessed"
-        class="border-2 w-16 h-8 border-blue text-blue rounded"
-      >
-        {{ copied ? 'Copied' : 'Copy' }}
-      </button>
-      <button
-        class="border-2 w-8 h-8 border-blue text-blue rounded"
-        @click="toggleDropdown"
-      >
-        ...
-      </button>
-      <transition
-        enter-active-class="transition ease-out duration-100"
-        enter-class="transform opacity-0 scale-95"
-        enter-to-class="transform opacity-100 scale-100"
-        leave-active-class="transition ease-in duration-75"
-        leave-class="transform opacity-100 scale-100"
-        leave-to-class="transform opacity-0 scale-95"
-      >
-        <Dropdown
-          class="right-8"
-          :is-opened="dropdownOpened"
-          :toggle-function="toggleDropdown"
+      <div class="relative">
+        <button
+          v-clipboard:copy="`${$config.shortLinkDomain}${alias}`"
+          v-clipboard:success="copySuccessed"
+          class="border-2 w-16 h-8 border-blue text-blue rounded"
         >
-          <nuxt-link
-            to="#"
-            class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue"
-            role="menuitem"
+          {{ copied ? 'Copied' : 'Copy' }}
+        </button>
+        <button
+          class="border-2 w-8 h-8 border-blue text-blue rounded"
+          @click="toggleDropdown"
+        >
+          ...
+        </button>
+        <transition
+          enter-active-class="transition ease-out duration-100"
+          enter-class="transform opacity-0 scale-95"
+          enter-to-class="transform opacity-100 scale-100"
+          leave-active-class="transition ease-in duration-75"
+          leave-class="transform opacity-100 scale-100"
+          leave-to-class="transform opacity-0 scale-95"
+        >
+          <Dropdown
+            :is-opened="dropdownOpened"
+            :toggle-function="toggleDropdown"
           >
-            Edit
-          </nuxt-link>
-          <p
-            class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue"
-            role="menuitem"
-            @click="toggleConfirmation(id)"
-          >
-            Delete
-          </p>
-        </Dropdown>
-      </transition>
+            <nuxt-link
+              to="#"
+              class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue"
+              role="menuitem"
+            >
+              Edit
+            </nuxt-link>
+            <p
+              class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue cursor-pointer"
+              role="menuitem"
+              @click="toggleConfirmation(id)"
+            >
+              Delete
+            </p>
+          </Dropdown>
+        </transition>
+      </div>
     </td>
   </tr>
 </template>
