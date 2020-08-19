@@ -15,6 +15,9 @@ module.exports = {
       fontFamily: {
         sans: ['AktivGroteskCorp', ...defaultTheme.fontFamily.sans],
       },
+      fontSize: {
+        large: '1.75rem',
+      },
       inset: {
         '1/2': '50%',
         8: '32px',
