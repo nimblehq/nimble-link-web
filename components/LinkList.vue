@@ -19,6 +19,7 @@
     </table>
 
     <PasswordPopup />
+    <DeleteConfirmation :confirm-callback-function="deleteLink" />
   </div>
 </template>
 
@@ -30,12 +31,13 @@ import useLinks from '@/composables/useLinks'
 export default {
   middleware: ['auth'],
   setup() {
-    const { links, fetchLinks } = useLinks()
+    const { links, fetchLinks, deleteLink } = useLinks()
 
     useFetch(fetchLinks)
 
     return {
       links,
+      deleteLink,
     }
   },
 }
