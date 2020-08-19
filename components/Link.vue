@@ -11,7 +11,7 @@
     <td class="text-right">
       <button
         class="border-2 w-16 h-8 border-blue text-blue rounded"
-        @click="$emit('show-password')"
+        @click="openPasswordPopup(password)"
       >
         View
       </button>
@@ -82,6 +82,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 
 import useCopy from '@/composables/useCopy'
 import useProfilePopup from '@/composables/useProfilePopup'
+import usePasswordPopup from '@/composables/usePasswordPopup'
 
 export default {
   setup() {
@@ -89,12 +90,14 @@ export default {
 
     const { copied, copySuccessed } = useCopy()
     const { togglePopup, popupOpened } = useProfilePopup()
+    const { openPasswordPopup } = usePasswordPopup()
 
     return {
       copied,
       copySuccessed,
       togglePopup,
       popupOpened,
+      openPasswordPopup,
     }
   },
   filters: {
