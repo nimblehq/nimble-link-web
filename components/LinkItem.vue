@@ -2,12 +2,12 @@
   <tr class="border-b h-20">
     <td class="text-left">
       <a
-        :href="shortLinkURL"
+        :href="shortLinkUrl(alias)"
         class="text-blue leading-5"
         target="_blank"
         rel="noreferrer"
       >
-        {{ shortLinkURL }}
+        {{ shortLinkUrl(alias) }}
         <ExternalLinkIcon class="inline" />
       </a>
       <p class="leading-6 truncate max-w-lg break-all break-words">
@@ -18,7 +18,7 @@
       <button
         v-if="password"
         class="border-2 w-16 h-8 border-blue text-blue rounded"
-        @click="openPasswordPopup(password)"
+        @click="showPasswordClickHandler"
       >
         View
       </button>
@@ -35,7 +35,7 @@
     <td class="text-right">
       <div class="relative">
         <button
-          v-clipboard:copy="shortLinkURL"
+          v-clipboard:copy="shortLinkUrl(alias)"
           v-clipboard:success="copySuccessed"
           class="border-2 w-16 h-8 border-blue text-blue rounded"
         >
@@ -59,17 +59,17 @@
             :is-opened="dropdownOpened"
             :toggle-function="toggleDropdown"
           >
-            <nuxt-link
-              to="#"
+            <p
               class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue"
               role="menuitem"
+              @click="editMenuClickHandler"
             >
               Edit
-            </nuxt-link>
+            </p>
             <p
               class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue cursor-pointer"
               role="menuitem"
-              @click="toggleConfirmation(id)"
+              @click="deleteMenuClickHandler"
             >
               Delete
             </p>
@@ -84,12 +84,12 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 
-import { computed, useContext } from '@nuxtjs/composition-api'
-
 import useCopy from '@/composables/useCopy'
 import useDropdown from '@/composables/useDropdown'
 import usePasswordPopup from '@/composables/usePasswordPopup'
 import useConfirmation from '@/composables/useConfirmation'
+import useEditPopup from '@/composables/useEditPopup'
+import useLinks from '@/composables/useLinks'
 
 import ExternalLinkIcon from '~/assets/images/icons/external-link.svg?inline'
 
@@ -105,21 +105,37 @@ export default {
     const { toggleDropdown, dropdownOpened } = useDropdown()
     const { openPasswordPopup } = usePasswordPopup()
     const { toggleConfirmation } = useConfirmation()
+    const { openEditPopup } = useEditPopup()
+    const { shortLinkUrl } = useLinks()
 
-    const { $config } = useContext()
+    const editMenuClickHandler = () => {
+      openEditPopup({
+        id: props.id,
+        password: props.password,
+        alias: props.alias,
+      })
+    }
 
-    const shortLinkURL = computed(() => {
-      return `${$config.shortLinkDomain}/${props.alias}`
-    })
+    const deleteMenuClickHandler = () => {
+      toggleConfirmation(props.id)
+    }
+
+    const showPasswordClickHandler = () => {
+      openPasswordPopup(props.password)
+    }
 
     return {
-      shortLinkURL,
+      shortLinkUrl,
       copied,
       copySuccessed,
       toggleDropdown,
       dropdownOpened,
       openPasswordPopup,
       toggleConfirmation,
+      openEditPopup,
+      editMenuClickHandler,
+      deleteMenuClickHandler,
+      showPasswordClickHandler,
     }
   },
   filters: {

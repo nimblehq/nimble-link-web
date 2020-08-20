@@ -6,7 +6,7 @@ export default function useLinks() {
     links: [],
   })
 
-  const { $axios } = useContext()
+  const { $axios, $config } = useContext()
 
   const fetchLinks = async () => {
     await $axios
@@ -26,9 +26,29 @@ export default function useLinks() {
       .catch((_error) => {})
   }
 
+  const editLink = async ({ id, password, alias }) => {
+    await $axios
+      .patch(`/links/${id}`, {
+        password,
+        alias,
+      })
+      .then(({ data }) => {
+        const oldLinkIndex = state.links.findIndex((link) => link.id === id)
+        state.links = Object.assign([...state.links], {
+          [oldLinkIndex]: humps.camelizeKeys(data),
+        })
+      })
+  }
+
+  const shortLinkUrl = (alias) => {
+    return `${$config.shortLinkDomain}/${alias}`
+  }
+
   return {
     ...toRefs(state),
     fetchLinks,
     deleteLink,
+    editLink,
+    shortLinkUrl,
   }
 }

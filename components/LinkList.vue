@@ -20,6 +20,7 @@
 
     <PasswordPopup />
     <Confirmation :confirm-callback-function="deleteLink" />
+    <EditPopup :save-callback-function="editLink" />
   </div>
 </template>
 
@@ -31,13 +32,14 @@ import useLinks from '@/composables/useLinks'
 export default {
   middleware: ['auth'],
   setup() {
-    const { links, fetchLinks, deleteLink } = useLinks()
+    const { links, fetchLinks, deleteLink, editLink } = useLinks()
 
     useFetch(fetchLinks)
 
     return {
       links,
       deleteLink,
+      editLink,
     }
   },
 }

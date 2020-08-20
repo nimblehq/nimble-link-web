@@ -30,13 +30,11 @@
         >
           <div class="bg-white">
             <div
-              class="flex bg-gray-900 py-6 px-10 justify-between align-center"
+              class="flex bg-gray-900 py-6 px-10 justify-between items-center"
             >
               <p class="text-white text-2xl">View password</p>
-              <img
+              <CloseIcon
                 class="h-4 cursor-pointer"
-                src="~/assets/images/icons/close.svg"
-                alt="logo"
                 @click="closePasswordPopup"
               />
             </div>
@@ -65,10 +63,13 @@
 
 <script>
 import usePasswordPopup from '@/composables/usePasswordPopup'
+import CloseIcon from '~/assets/images/icons/close.svg?inline'
 
 export default {
   middleware: ['auth'],
-
+  components: {
+    CloseIcon,
+  },
   setup() {
     const {
       displayedPassword,

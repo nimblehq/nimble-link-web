@@ -45,7 +45,7 @@
                 </button>
                 <button
                   class="border-2 text-blue -16 h-8 border-blue rounded px-4"
-                  @click="confirm(confirmCallbackFunction)"
+                  @click="confirmHandler"
                 >
                   Delete
                 </button>
@@ -64,7 +64,7 @@ import useConfirmation from '@/composables/useConfirmation'
 export default {
   middleware: ['auth'],
 
-  setup() {
+  setup(props) {
     const {
       confirm,
       cancel,
@@ -72,12 +72,18 @@ export default {
       toggleConfirmation,
       confirmationOpened,
     } = useConfirmation()
+
+    const confirmHandler = () => {
+      confirm(props.confirmCallbackFunction)
+    }
+
     return {
       confirm,
       cancel,
       params,
       confirmationOpened,
       toggleConfirmation,
+      confirmHandler,
     }
   },
   props: {
