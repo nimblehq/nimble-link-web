@@ -2,7 +2,11 @@
   <div class="max-w-7xl mx-auto">
     <table class="w-full">
       <tbody>
-        <GuestLinkItem v-for="link in links" :key="link.id" v-bind="link" />
+        <GuestLinkItem
+          v-for="link in recentLinks"
+          :key="link.id"
+          v-bind="link"
+        />
       </tbody>
     </table>
   </div>
@@ -14,10 +18,10 @@ import useLinks from '@/composables/useLinks'
 export default {
   middleware: ['auth'],
   setup() {
-    const { links } = useLinks()
+    const { recentLinks } = useLinks()
 
     return {
-      links,
+      recentLinks,
     }
   },
 }

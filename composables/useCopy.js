@@ -7,7 +7,7 @@ export default function useCopy() {
 
   const setCopied = () => {
     state.copied = true
-    setTimeout(() => (state.copied = false), 5000)
+    setTimeout(() => (state.copied = false), 3000)
   }
 
   return {
