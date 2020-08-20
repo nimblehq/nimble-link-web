@@ -45,13 +45,15 @@ export default function useLinks() {
       .get('/links')
       .then(({ data }) => {
         state.links = humps.camelizeKeys(data)
+        state.links.sort((a, b) => (a.id < b.id ? 1 : -1))
         setRecentLinks()
+        state.currentLink = {}
       })
       .catch((_error) => {})
   }
 
   const createLink = async () => {
-    if (state.currentLink.originalUrl) {
+    if (state.currentLink.originalUrl && !state.saved) {
       await $axios
         .post('/links', humps.decamelizeKeys(state.currentLink))
         .then(({ data }) => {
@@ -60,6 +62,7 @@ export default function useLinks() {
           state.currentLink = {
             ...link,
             originalUrl: shortLinkUrl(link.alias),
+            canEdit: true,
           }
           state.saved = true
         })
@@ -83,10 +86,16 @@ export default function useLinks() {
         alias,
       })
       .then(({ data }) => {
+        const updatedLink = humps.camelizeKeys(data)
         const oldLinkIndex = state.links.findIndex((link) => link.id === id)
         state.links = Object.assign([...state.links], {
-          [oldLinkIndex]: humps.camelizeKeys(data),
+          [oldLinkIndex]: updatedLink,
         })
+        state.currentLink = {
+          ...updatedLink,
+          originalUrl: shortLinkUrl(updatedLink.alias),
+        }
+        state.saved = true
       })
   }
 
