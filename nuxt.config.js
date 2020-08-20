@@ -118,6 +118,6 @@ export default {
     },
   },
   publicRuntimeConfig: {
-    shortLinkDomain: process.env.API_BASE_URL || 'https://namtx.dev',
+    shortLinkDomain: process.env.BASE_URL || 'https://namtx.dev',
   },
 }
