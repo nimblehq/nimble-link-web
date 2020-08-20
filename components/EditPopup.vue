@@ -44,16 +44,16 @@
                 >
                   {{ shortLinkUrl(alias) }}
                 </a>
-                <button
+                <CustomButton
                   v-clipboard:copy="shortLinkUrl(alias)"
-                  v-clipboard:success="copySuccessed"
-                  class="border-2 w-16 h-8 border-blue text-blue rounded ml-8 mr-2"
+                  v-clipboard:success="setCopied"
+                  class="btn-secondary"
                 >
-                  {{ aliasCopied ? 'Copied' : 'Copy' }}
-                </button>
-                <button class="border-2 w-16 h-8 border-blue text-blue rounded">
+                  {{ copied ? 'Copied' : 'Copy' }}
+                </CustomButton>
+                <CustomButton class="btn-secondary">
                   Delete
-                </button>
+                </CustomButton>
               </div>
               <hr />
               <div class="flex flex-col">
@@ -72,13 +72,13 @@
                   type="password"
                 />
 
-                <button
+                <CustomButton
                   v-clipboard:copy="shortLinkUrl(alias)"
                   v-clipboard:success="save"
-                  class="self-end py-4 bg-blue h-12 w-48 text-white leading-4 mt-8 rounded"
+                  class="self-end mt-8 btn-primary btn-lg w-48"
                 >
                   Save &amp; Copy
-                </button>
+                </CustomButton>
               </div>
             </div>
           </div>
@@ -90,6 +90,7 @@
 
 <script>
 import useEditPopup from '@/composables/useEditPopup'
+import useCopy from '@/composables/useCopy'
 import useLinks from '@/composables/useLinks'
 import CloseIcon from '~/assets/images/icons/close.svg?inline'
 
@@ -100,15 +101,15 @@ export default {
   },
 
   setup(props) {
+    const { copied, setCopied } = useCopy()
+
     const {
       alias,
       password,
       id,
-      aliasCopied,
       editPopupOpened,
       openEditPopup,
       closeEditPopup,
-      copySuccessed,
     } = useEditPopup()
 
     const { shortLinkUrl } = useLinks()
@@ -124,14 +125,14 @@ export default {
     }
 
     return {
+      copied,
+      setCopied,
       alias,
       password,
       id,
-      aliasCopied,
       editPopupOpened,
       openEditPopup,
       closeEditPopup,
-      copySuccessed,
       save,
       shortLinkUrl,
     }

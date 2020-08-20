@@ -37,18 +37,15 @@
                 You can't undo this action
               </p>
               <div class="flex flex-row justify-end">
-                <button
-                  class="border-2 bg-blue text-white -16 h-8 border-blue mr-4 rounded px-4"
-                  @click="cancel"
-                >
+                <CustomButton class="btn-primary" @click="cancel">
                   Cancel
-                </button>
-                <button
-                  class="border-2 text-blue -16 h-8 border-blue rounded px-4"
+                </CustomButton>
+                <CustomButton
+                  class="btn-secondary ml-4"
                   @click="confirmHandler"
                 >
                   Delete
-                </button>
+                </CustomButton>
               </div>
             </div>
           </div>

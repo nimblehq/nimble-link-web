@@ -9,17 +9,32 @@ import humps from 'humps'
 
 const state = reactive({
   links: [],
+  recentLinks: [],
   currentLink: {},
   saved: false,
 })
 
+const setRecentLinks = () => {
+  state.recentLinks = state.links.slice(0, 3)
+}
+
+const linksCount = computed(() => state.recentLinks.length)
+
 watch(
   [() => state.currentLink.originalUrl, () => state.saved],
-  ([_link, _saved], [_preLink, preSaved]) => {
+  ([link, _saved], [_preLink, preSaved]) => {
     if (preSaved) {
       state.saved = false
+      state.currentLink = {
+        originalUrl: link,
+      }
     }
   }
+)
+
+watch(
+  () => state.links,
+  () => setRecentLinks()
 )
 
 export default function useLinks() {
@@ -30,6 +45,7 @@ export default function useLinks() {
       .get('/links')
       .then(({ data }) => {
         state.links = humps.camelizeKeys(data)
+        setRecentLinks()
       })
       .catch((_error) => {})
   }
@@ -78,10 +94,6 @@ export default function useLinks() {
     return `${$config.shortLinkDomain}/${alias}`
   }
 
-  const linksCount = computed(() => state.links.length)
-
-  const recentLinks = computed(() => state.links.slice(0, 3))
-
   return {
     ...toRefs(state),
     fetchLinks,
@@ -90,6 +102,5 @@ export default function useLinks() {
     editLink,
     shortLinkUrl,
     linksCount,
-    recentLinks,
   }
 }
