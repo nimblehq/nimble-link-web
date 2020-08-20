@@ -59,13 +59,13 @@
             :is-opened="dropdownOpened"
             :toggle-function="toggleDropdown"
           >
-            <nuxt-link
-              to="#"
+            <p
               class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue"
               role="menuitem"
+              @click="openEditPopup({ id, alias, password })"
             >
               Edit
-            </nuxt-link>
+            </p>
             <p
               class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue cursor-pointer"
               role="menuitem"
@@ -90,6 +90,7 @@ import useCopy from '@/composables/useCopy'
 import useDropdown from '@/composables/useDropdown'
 import usePasswordPopup from '@/composables/usePasswordPopup'
 import useConfirmation from '@/composables/useConfirmation'
+import useEditPopup from '@/composables/useEditPopup'
 
 import ExternalLinkIcon from '~/assets/images/icons/external-link.svg?inline'
 
@@ -105,6 +106,7 @@ export default {
     const { toggleDropdown, dropdownOpened } = useDropdown()
     const { openPasswordPopup } = usePasswordPopup()
     const { toggleConfirmation } = useConfirmation()
+    const { openEditPopup } = useEditPopup()
 
     const { $config } = useContext()
 
@@ -120,6 +122,7 @@ export default {
       dropdownOpened,
       openPasswordPopup,
       toggleConfirmation,
+      openEditPopup,
     }
   },
   filters: {

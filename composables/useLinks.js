@@ -26,9 +26,24 @@ export default function useLinks() {
       .catch((_error) => {})
   }
 
+  const editLink = async ({ id, password, alias }) => {
+    await $axios
+      .patch(`/links/${id}`, {
+        password,
+        alias,
+      })
+      .then(({ data }) => {
+        const oldLinkIndex = state.links.findIndex((link) => link.id === id)
+        state.links = Object.assign([...state.links], {
+          [oldLinkIndex]: humps.camelizeKeys(data),
+        })
+      })
+  }
+
   return {
     ...toRefs(state),
     fetchLinks,
     deleteLink,
+    editLink,
   }
 }
