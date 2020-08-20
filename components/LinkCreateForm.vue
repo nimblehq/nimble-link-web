@@ -4,10 +4,11 @@
     <h1 class="mt-5 font-bold text-xl leading-8">
       Shortener, Custom Links & Link Management
     </h1>
-    <div class="w-full flex mt-10">
+    <form class="w-full flex mt-10" @submit.prevent="createLink">
       <div class="w-4/5">
         <CustomInput
           v-model="currentLink.originalUrl"
+          autofocus
           placeholder="Paste a long URL"
           class="w-full"
           :saved="saved"
@@ -31,7 +32,7 @@
           Shorten
         </CustomButton>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
