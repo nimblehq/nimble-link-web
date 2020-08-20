@@ -40,7 +40,7 @@ export default function useLinks() {
       })
   }
 
-  const shortLinkURL = (alias) => {
+  const shortLinkUrl = (alias) => {
     return `${$config.shortLinkDomain}/${alias}`
   }
 
@@ -49,6 +49,6 @@ export default function useLinks() {
     fetchLinks,
     deleteLink,
     editLink,
-    shortLinkURL,
+    shortLinkUrl,
   }
 }

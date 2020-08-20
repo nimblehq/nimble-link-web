@@ -40,12 +40,12 @@
                 <a
                   class="text-blue"
                   target="_blank"
-                  :href="shortLinkURL(alias)"
+                  :href="shortLinkUrl(alias)"
                 >
-                  {{ shortLinkURL(alias) }}
+                  {{ shortLinkUrl(alias) }}
                 </a>
                 <button
-                  v-clipboard:copy="shortLinkURL(alias)"
+                  v-clipboard:copy="shortLinkUrl(alias)"
                   v-clipboard:success="copySuccessed"
                   class="border-2 w-16 h-8 border-blue text-blue rounded ml-8 mr-2"
                 >
@@ -73,7 +73,7 @@
                 />
 
                 <button
-                  v-clipboard:copy="shortLinkURL(alias)"
+                  v-clipboard:copy="shortLinkUrl(alias)"
                   v-clipboard:success="save"
                   class="self-end py-4 bg-blue h-12 w-48 text-white leading-4 mt-8 rounded"
                 >
@@ -111,7 +111,7 @@ export default {
       copySuccessed,
     } = useEditPopup()
 
-    const { shortLinkURL } = useLinks()
+    const { shortLinkUrl } = useLinks()
 
     const save = () => {
       props
@@ -133,7 +133,7 @@ export default {
       closeEditPopup,
       copySuccessed,
       save,
-      shortLinkURL,
+      shortLinkUrl,
     }
   },
 

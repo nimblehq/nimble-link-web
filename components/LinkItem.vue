@@ -2,12 +2,12 @@
   <tr class="border-b h-20">
     <td class="text-left">
       <a
-        :href="shortLinkURL(alias)"
+        :href="shortLinkUrl(alias)"
         class="text-blue leading-5"
         target="_blank"
         rel="noreferrer"
       >
-        {{ shortLinkURL(alias) }}
+        {{ shortLinkUrl(alias) }}
         <ExternalLinkIcon class="inline" />
       </a>
       <p class="leading-6 truncate max-w-lg break-all break-words">
@@ -35,7 +35,7 @@
     <td class="text-right">
       <div class="relative">
         <button
-          v-clipboard:copy="shortLinkURL(alias)"
+          v-clipboard:copy="shortLinkUrl(alias)"
           v-clipboard:success="copySuccessed"
           class="border-2 w-16 h-8 border-blue text-blue rounded"
         >
@@ -106,7 +106,7 @@ export default {
     const { openPasswordPopup } = usePasswordPopup()
     const { toggleConfirmation } = useConfirmation()
     const { openEditPopup } = useEditPopup()
-    const { shortLinkURL } = useLinks()
+    const { shortLinkUrl } = useLinks()
 
     const editMenuClickHandler = () => {
       openEditPopup({
@@ -125,7 +125,7 @@ export default {
     }
 
     return {
-      shortLinkURL,
+      shortLinkUrl,
       copied,
       copySuccessed,
       toggleDropdown,
