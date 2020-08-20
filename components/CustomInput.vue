@@ -2,8 +2,8 @@
   <input
     :id="id"
     class="form-input"
-    :class="{ 'form-input-saved': saved }"
-    type="text"
+    :class="{ 'form-input-saved': saved, 'form-input-error': error }"
+    :type="type"
     :value="value"
     :placeholder="placeholder"
     @input="$emit('input', $event.target.value)"
@@ -17,6 +17,10 @@ export default {
       type: String,
       default: undefined,
     },
+    type: {
+      type: String,
+      default: 'text',
+    },
     placeholder: {
       type: String,
       default: undefined,
@@ -26,6 +30,10 @@ export default {
       default: undefined,
     },
     saved: {
+      type: Boolean,
+      default: false,
+    },
+    error: {
       type: Boolean,
       default: false,
     },
@@ -43,6 +51,10 @@ export default {
 
   &-saved {
     @apply text-blue;
+  }
+
+  &-error {
+    @apply border-red-600;
   }
 
   &:active,

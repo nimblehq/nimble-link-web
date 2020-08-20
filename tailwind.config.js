@@ -36,10 +36,17 @@ module.exports = {
         sans: ['AktivGroteskCorp', ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
+        ...defaultTheme.fontSize,
         large: '1.75rem',
+        xlarge: '2.875rem',
+      },
+      lineHeight: {
+        ...defaultTheme.lineHeight,
+        'extra-loose': '3.375rem',
       },
       height: {
         14: '3.5rem',
+        18: '4.5rem',
       },
       inset: {
         '1/2': '50%',
