@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-24 mx-auto flex flex-col items-center">
+  <div class="mt-24 flex flex-col items-center">
     <LogoIcon class="h-10" />
     <h1 class="mt-5 font-bold text-xl leading-8">
       Shortener, Custom Links & Link Management

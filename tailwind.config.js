@@ -46,6 +46,9 @@ module.exports = {
         ...defaultTheme.inset,
         outline: '0 0 0 2px rgba(55, 89, 253, 0.32)',
       },
+      zIndex: {
+        '-10': '-10',
+      },
     },
   },
   variants: {},
