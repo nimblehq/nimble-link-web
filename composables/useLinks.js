@@ -1,11 +1,13 @@
-import { reactive, useContext, toRefs } from '@nuxtjs/composition-api'
+import { reactive, useContext, toRefs, watch } from '@nuxtjs/composition-api'
 import humps from 'humps'
 
-export default function useLinks() {
-  const state = reactive({
-    links: [],
-  })
+const state = reactive({
+  links: [],
+  currentLink: {},
+  saved: false,
+})
 
+export default function useLinks() {
   const { $axios, $config } = useContext()
 
   const fetchLinks = async () => {
@@ -15,6 +17,20 @@ export default function useLinks() {
         state.links = humps.camelizeKeys(data)
       })
       .catch((_error) => {})
+  }
+
+  const createLink = async () => {
+    if (state.currentLink.originalUrl) {
+      await $axios
+        .post('/links', humps.decamelizeKeys(state.currentLink))
+        .then(({ data }) => {
+          const link = humps.camelizeKeys(data)
+          state.links.push(link)
+          state.currentLink = link
+          state.saved = true
+        })
+        .catch((_error) => {})
+    }
   }
 
   const deleteLink = async (id) => {
@@ -44,9 +60,22 @@ export default function useLinks() {
     return `${$config.shortLinkDomain}/${alias}`
   }
 
+  watch(
+    () => state.currentLink.originalUrl,
+    (link) => {
+      if (state.saved === true) {
+        state.saved = false
+        state.currentLink = {
+          originalUrl: link,
+        }
+      }
+    }
+  )
+
   return {
     ...toRefs(state),
     fetchLinks,
+    createLink,
     deleteLink,
     editLink,
     shortLinkUrl,

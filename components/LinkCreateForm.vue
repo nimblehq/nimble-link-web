@@ -37,7 +37,7 @@
 
 <script>
 import useCopy from '@/composables/useCopy'
-import useGuestLinks from '~/composables/useGuestLinks'
+import useLinks from '~/composables/useLinks'
 
 import LogoIcon from '~/assets/images/icons/logo.svg?inline'
 
@@ -45,7 +45,7 @@ export default {
   components: { LogoIcon },
 
   setup() {
-    const { createLink, currentLink, saved, shortLinkUrl } = useGuestLinks()
+    const { createLink, currentLink, saved, shortLinkUrl } = useLinks()
     const { copied, setCopied } = useCopy()
 
     return {
