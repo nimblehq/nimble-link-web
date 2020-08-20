@@ -30,27 +30,22 @@
         >
           <div class="bg-white">
             <div
-              class="flex bg-gray-900 py-6 px-10 justify-between align-center"
+              class="flex bg-gray-900 py-6 px-10 justify-between items-center"
             >
               <p class="text-white text-2xl">Edit link</p>
-              <img
-                class="h-4 cursor-pointer"
-                src="~/assets/images/icons/close.svg"
-                alt="logo"
-                @click="closeEditPopup"
-              />
+              <CloseIcon class="h-4 cursor-pointer" @click="closeEditPopup" />
             </div>
             <div class="flex flex-col m-6 mx-10 mb-10">
               <div class="mb-6">
                 <a
                   class="text-blue"
                   target="_blank"
-                  :href="`${$config.shortLinkDomain}${alias}`"
+                  :href="shortLinkURL(alias)"
                 >
-                  {{ `${$config.shortLinkDomain}${alias}` }}
+                  {{ shortLinkURL(alias) }}
                 </a>
                 <button
-                  v-clipboard:copy="`${$config.shortLinkDomain}${alias}`"
+                  v-clipboard:copy="shortLinkURL(alias)"
                   v-clipboard:success="copySuccessed"
                   class="border-2 w-16 h-8 border-blue text-blue rounded ml-8 mr-2"
                 >
@@ -78,13 +73,8 @@
                 />
 
                 <button
-                  v-clipboard:copy="`${$config.shortLinkDomain}${alias}`"
-                  v-clipboard:success="
-                    () =>
-                      saveCallbackFunction({ id, password, alias }).then(
-                        closeEditPopup
-                      )
-                  "
+                  v-clipboard:copy="shortLinkURL(alias)"
+                  v-clipboard:success="save"
                   class="self-end py-4 bg-blue h-12 w-48 text-white leading-4 mt-8 rounded"
                 >
                   Save &amp; Copy
@@ -100,9 +90,14 @@
 
 <script>
 import useEditPopup from '@/composables/useEditPopup'
+import useLinks from '@/composables/useLinks'
+import CloseIcon from '~/assets/images/icons/close.svg?inline'
 
 export default {
   middleware: ['auth'],
+  components: {
+    CloseIcon,
+  },
 
   setup(props) {
     const {
@@ -116,6 +111,18 @@ export default {
       copySuccessed,
     } = useEditPopup()
 
+    const { shortLinkURL } = useLinks()
+
+    const save = () => {
+      props
+        .saveCallbackFunction({
+          id: id.value,
+          password: password.value,
+          alias: alias.value,
+        })
+        .then(closeEditPopup)
+    }
+
     return {
       alias,
       password,
@@ -125,6 +132,8 @@ export default {
       openEditPopup,
       closeEditPopup,
       copySuccessed,
+      save,
+      shortLinkURL,
     }
   },
 

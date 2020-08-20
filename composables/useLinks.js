@@ -6,7 +6,7 @@ export default function useLinks() {
     links: [],
   })
 
-  const { $axios } = useContext()
+  const { $axios, $config } = useContext()
 
   const fetchLinks = async () => {
     await $axios
@@ -40,10 +40,15 @@ export default function useLinks() {
       })
   }
 
+  const shortLinkURL = (alias) => {
+    return `${$config.shortLinkDomain}/${alias}`
+  }
+
   return {
     ...toRefs(state),
     fetchLinks,
     deleteLink,
     editLink,
+    shortLinkURL,
   }
 }
