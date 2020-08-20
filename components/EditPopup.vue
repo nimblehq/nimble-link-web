@@ -36,7 +36,7 @@
               <CloseIcon class="h-4 cursor-pointer" @click="closeEditPopup" />
             </div>
             <div class="flex flex-col m-6 mx-10 mb-10">
-              <div class="mb-6">
+              <div class="mb-6 flex justify-between items-center">
                 <a
                   class="text-blue"
                   target="_blank"
@@ -47,12 +47,9 @@
                 <CustomButton
                   v-clipboard:copy="shortLinkUrl(alias)"
                   v-clipboard:success="setCopied"
-                  class="btn-secondary"
+                  class="btn-secondary ml-8"
                 >
                   {{ copied ? 'Copied' : 'Copy' }}
-                </CustomButton>
-                <CustomButton class="btn-secondary">
-                  Delete
                 </CustomButton>
               </div>
               <hr />

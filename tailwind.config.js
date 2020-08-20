@@ -51,6 +51,7 @@ module.exports = {
       inset: {
         '1/2': '50%',
         8: '32px',
+        '-50': 'calc(-50vw + 50%)',
         ...defaultTheme.inset,
       },
       boxShadow: {
