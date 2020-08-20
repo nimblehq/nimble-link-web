@@ -7,6 +7,15 @@ const state = reactive({
   saved: false,
 })
 
+watch(
+  [() => state.currentLink.originalUrl, () => state.saved],
+  ([_link, _saved], [_preLink, preSaved]) => {
+    if (preSaved) {
+      state.saved = false
+    }
+  }
+)
+
 export default function useLinks() {
   const { $axios, $config } = useContext()
 
@@ -26,7 +35,10 @@ export default function useLinks() {
         .then(({ data }) => {
           const link = humps.camelizeKeys(data)
           state.links.push(link)
-          state.currentLink = link
+          state.currentLink = {
+            ...link,
+            originalUrl: shortLinkUrl(link.alias),
+          }
           state.saved = true
         })
         .catch((_error) => {})
@@ -59,18 +71,6 @@ export default function useLinks() {
   const shortLinkUrl = (alias) => {
     return `${$config.shortLinkDomain}/${alias}`
   }
-
-  watch(
-    () => state.currentLink.originalUrl,
-    (link) => {
-      if (state.saved === true) {
-        state.saved = false
-        state.currentLink = {
-          originalUrl: link,
-        }
-      }
-    }
-  )
 
   return {
     ...toRefs(state),
