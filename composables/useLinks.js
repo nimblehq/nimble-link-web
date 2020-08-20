@@ -40,7 +40,7 @@ export default function useLinks() {
         .post('/links', humps.decamelizeKeys(state.currentLink))
         .then(({ data }) => {
           const link = humps.camelizeKeys(data)
-          state.links.push(link)
+          state.links.unshift(link)
           state.currentLink = {
             ...link,
             originalUrl: shortLinkUrl(link.alias),
@@ -80,6 +80,8 @@ export default function useLinks() {
 
   const linksCount = computed(() => state.links.length)
 
+  const recentLinks = computed(() => state.links.slice(0, 3))
+
   return {
     ...toRefs(state),
     fetchLinks,
@@ -88,5 +90,6 @@ export default function useLinks() {
     editLink,
     shortLinkUrl,
     linksCount,
+    recentLinks,
   }
 }
