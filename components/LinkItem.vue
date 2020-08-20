@@ -36,7 +36,7 @@
       <div class="relative">
         <button
           v-clipboard:copy="shortLinkUrl(alias)"
-          v-clipboard:success="copySuccessed"
+          v-clipboard:success="setCopied"
           class="border-2 w-16 h-8 border-blue text-blue rounded"
         >
           {{ copied ? 'Copied' : 'Copy' }}
@@ -101,7 +101,7 @@ export default {
   setup(props) {
     dayjs.extend(relativeTime)
 
-    const { copied, copySuccessed } = useCopy()
+    const { copied, setCopied } = useCopy()
     const { toggleDropdown, dropdownOpened } = useDropdown()
     const { openPasswordPopup } = usePasswordPopup()
     const { toggleConfirmation } = useConfirmation()
@@ -127,7 +127,7 @@ export default {
     return {
       shortLinkUrl,
       copied,
-      copySuccessed,
+      setCopied,
       toggleDropdown,
       dropdownOpened,
       openPasswordPopup,

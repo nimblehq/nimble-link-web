@@ -3,8 +3,8 @@
     <div class="max-w-7xl mx-auto">
       <div class="flex items-center justify-between h-16">
         <div class="flex items-center">
-          <nuxt-link class="flex-shrink-0" to="/">
-            <img class="h-4" src="~/assets/images/icons/logo.svg" alt="logo" />
+          <nuxt-link v-if="logoShowed" class="flex-shrink-0 py-3" to="/">
+            <LogoIcon class="h-4 w-auto" />
           </nuxt-link>
         </div>
         <div v-if="loggedIn" class="hidden md:block">
@@ -159,17 +159,30 @@
 </template>
 
 <script>
+import { useContext, computed } from '@nuxtjs/composition-api'
+
 import useDropdown from '../composables/useDropdown'
 import useAuth from '../composables/useAuth'
 
+import LogoIcon from '~/assets/images/icons/logo.svg?inline'
+
 export default {
   name: 'Header',
+
+  components: { LogoIcon },
 
   setup() {
     const { dropdownOpened, toggleDropdown } = useDropdown()
     const { user, loggedIn, login, logout } = useAuth()
 
+    const { route } = useContext()
+
+    const logoShowed = computed(() => {
+      return route.value.path !== '/'
+    })
+
     return {
+      logoShowed,
       dropdownOpened,
       toggleDropdown,
       user,

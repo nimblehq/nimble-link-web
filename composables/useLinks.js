@@ -1,11 +1,28 @@
-import { reactive, useContext, toRefs } from '@nuxtjs/composition-api'
+import {
+  reactive,
+  useContext,
+  toRefs,
+  watch,
+  computed,
+} from '@nuxtjs/composition-api'
 import humps from 'humps'
 
-export default function useLinks() {
-  const state = reactive({
-    links: [],
-  })
+const state = reactive({
+  links: [],
+  currentLink: {},
+  saved: false,
+})
 
+watch(
+  [() => state.currentLink.originalUrl, () => state.saved],
+  ([_link, _saved], [_preLink, preSaved]) => {
+    if (preSaved) {
+      state.saved = false
+    }
+  }
+)
+
+export default function useLinks() {
   const { $axios, $config } = useContext()
 
   const fetchLinks = async () => {
@@ -15,6 +32,23 @@ export default function useLinks() {
         state.links = humps.camelizeKeys(data)
       })
       .catch((_error) => {})
+  }
+
+  const createLink = async () => {
+    if (state.currentLink.originalUrl) {
+      await $axios
+        .post('/links', humps.decamelizeKeys(state.currentLink))
+        .then(({ data }) => {
+          const link = humps.camelizeKeys(data)
+          state.links.push(link)
+          state.currentLink = {
+            ...link,
+            originalUrl: shortLinkUrl(link.alias),
+          }
+          state.saved = true
+        })
+        .catch((_error) => {})
+    }
   }
 
   const deleteLink = async (id) => {
@@ -44,11 +78,15 @@ export default function useLinks() {
     return `${$config.shortLinkDomain}/${alias}`
   }
 
+  const linksCount = computed(() => state.links.length)
+
   return {
     ...toRefs(state),
     fetchLinks,
+    createLink,
     deleteLink,
     editLink,
     shortLinkUrl,
+    linksCount,
   }
 }
