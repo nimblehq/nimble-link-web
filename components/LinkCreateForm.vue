@@ -5,11 +5,13 @@
       Shortener, Custom Links & Link Management
     </h1>
     <div>
-      <CustomButton class="btn-primary">
+      <CustomInput class="w-4/5" placeholder="Paste a long URL"> </CustomInput>
+
+      <CustomButton class="w-1/5 btn-primary btn-lg">
         Shorten
       </CustomButton>
 
-      <CustomButton class="btn-primary btn-lg">
+      <CustomButton class="btn-primary">
         Shorten
       </CustomButton>
 

@@ -55,5 +55,9 @@ export default {}
   &-lg {
     @apply h-12 w-48 py-3 rounded-md;
   }
+
+  &-xl {
+    @apply h-14 w-48 py-3 rounded-md;
+  }
 }
 </style>

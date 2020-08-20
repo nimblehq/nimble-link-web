@@ -3,6 +3,9 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 module.exports = {
   theme: {
     extend: {
+      borderWidth: {
+        3: '3px',
+      },
       colors: {
         black: {
           300: 'rgba(0, 0, 0, 0.3)',
@@ -19,12 +22,19 @@ module.exports = {
           default: '#D4D5D8',
           100: '#F8F8F8',
         },
+        white: {
+          default: '#fff',
+          70: 'rgba(0, 0, 0, 0.07)',
+        },
       },
       fontFamily: {
         sans: ['AktivGroteskCorp', ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
         large: '1.75rem',
+      },
+      height: {
+        14: '3.5rem',
       },
       inset: {
         '1/2': '50%',
