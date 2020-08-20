@@ -1,4 +1,10 @@
-import { reactive, useContext, toRefs, watch } from '@nuxtjs/composition-api'
+import {
+  reactive,
+  useContext,
+  toRefs,
+  watch,
+  computed,
+} from '@nuxtjs/composition-api'
 import humps from 'humps'
 
 const state = reactive({
@@ -72,6 +78,8 @@ export default function useLinks() {
     return `${$config.shortLinkDomain}/${alias}`
   }
 
+  const linksCount = computed(() => state.links.length)
+
   return {
     ...toRefs(state),
     fetchLinks,
@@ -79,5 +87,6 @@ export default function useLinks() {
     deleteLink,
     editLink,
     shortLinkUrl,
+    linksCount,
   }
 }
