@@ -96,7 +96,27 @@ export default {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {},
+  build: {
+    postcss: {
+      // Add plugin names as key and arguments as value
+      // Install them before as dependencies with npm or yarn
+      plugins: {
+        'postcss-import': {},
+        'postcss-url': {},
+        'postcss-nested': {},
+        'postcss-preset-env': this.preset,
+        cssnano: { preset: 'default' }, // disabled in dev mode
+      },
+      order: 'presetEnvAndCssnanoLast',
+      preset: {
+        // Change the postcss-preset-env settings
+        autoprefixer: {
+          grid: true,
+        },
+        stage: 2,
+      },
+    },
+  },
   publicRuntimeConfig: {
     shortLinkDomain: process.env.API_BASE_URL || 'https://namtx.dev',
   },

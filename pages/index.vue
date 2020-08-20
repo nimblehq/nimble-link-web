@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    <LinkCreateForm />
+  </div>
 </template>
 
 <script>
