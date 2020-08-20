@@ -8,8 +8,8 @@
     leave-to-class="opacity-0"
   >
     <div v-show="linksCount > 0" class="mt-24">
-      <div class="relative -left-50 w-screen bg-gray-200 -z-10 h-full">
-        <div class="flex flex-col mx-8 md:mx-16 lg:mx-20 xl:mx-32">
+      <div class="relative -left-50 w-screen bg-gray-200 h-full">
+        <div class="flex flex-col mx-10 md:mx-20 lg:mx-24 xl:mx-40">
           <h1 class="mt-8 font-bold text-xl">Recent links</h1>
           <div class="mt-6">
             <UserLinkList v-if="$auth.loggedIn" :recent="true" />

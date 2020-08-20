@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen flex flex-col mx-8 md:mx-16 lg:mx-20 xl:mx-32">
+  <div class="h-screen flex flex-col mx-12 md:mx-20 lg:mx-24 xl:mx-40">
     <div class="flex-initial"><Header /></div>
     <div class="flex-1 h-full"><Nuxt /></div>
   </div>
