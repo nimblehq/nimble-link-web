@@ -18,7 +18,7 @@ const setRecentLinks = () => {
   state.recentLinks = state.links.slice(0, 3)
 }
 
-const linksCount = computed(() => state.recentLinks.length)
+const linksCount = computed(() => state.links.length)
 
 watch(
   [() => state.currentLink.originalUrl, () => state.saved],

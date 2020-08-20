@@ -3,11 +3,17 @@
     <table class="w-full">
       <thead>
         <tr class="border-b">
-          <th class="text-left text-xs font-medium leading-6">URL</th>
-          <th class="text-right text-xs font-medium leading-6">PASSWORD</th>
-          <th class="text-right text-xs font-medium leading-6">TOTAL CLICK</th>
-          <th class="text-right text-xs font-medium leading-6">DATE</th>
-          <th class="text-right text-xs font-medium leading-6">ACTION</th>
+          <th class="w-5/12 text-left text-xs font-medium leading-6">URL</th>
+          <th class="w-1/12 text-right text-xs font-medium leading-6">
+            PASSWORD
+          </th>
+          <th class="w-1/12 text-right text-xs font-medium leading-6">
+            TOTAL CLICK
+          </th>
+          <th class="w-2/12 text-right text-xs font-medium leading-6">DATE</th>
+          <th class="w-3/12 text-right text-xs font-medium leading-6">
+            ACTION
+          </th>
         </tr>
       </thead>
       <tbody v-if="recent">

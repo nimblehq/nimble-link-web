@@ -1,6 +1,6 @@
 <template>
   <tr class="border-b h-20">
-    <td class="text-left">
+    <td class="w-5/12 text-left">
       <a
         :href="shortLinkUrl(alias)"
         class="text-blue leading-5"
@@ -14,7 +14,7 @@
         {{ originalUrl }}
       </p>
     </td>
-    <td class="text-right">
+    <td class="w-1/12 text-right">
       <CustomButton
         v-if="password"
         class="btn-secondary"
@@ -26,13 +26,13 @@
         No
       </div>
     </td>
-    <td class="text-right">
+    <td class="w-1/12 text-right">
       {{ counter }}
     </td>
-    <td class="text-right">
+    <td class="w-2/12 text-right">
       {{ createdAt | diffForHumans }}
     </td>
-    <td class="text-right">
+    <td class="w-3/12 text-right">
       <div class="relative">
         <CustomButton
           v-clipboard:copy="shortLinkUrl(alias)"
