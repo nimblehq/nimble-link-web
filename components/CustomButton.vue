@@ -1,5 +1,5 @@
 <template>
-  <button class="btn" @click="$emit('click')">
+  <button class="btn" @click="$emit('click', $event)">
     <slot></slot>
   </button>
 </template>
@@ -53,11 +53,11 @@ export default {}
   }
 
   &-lg {
-    @apply h-12 w-48 py-3 rounded-md;
+    @apply h-12 py-3 rounded-md;
   }
 
   &-xl {
-    @apply h-14 w-48 py-3 rounded-md;
+    @apply h-14 py-3 rounded-md;
   }
 }
 </style>

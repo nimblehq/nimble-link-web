@@ -1,5 +1,13 @@
 <template>
-  <input :id="id" class="form-input" type="text" :placeholder="placeholder" />
+  <input
+    :id="id"
+    class="form-input"
+    :class="{ 'form-input-saved': saved }"
+    type="text"
+    :value="value"
+    :placeholder="placeholder"
+    @input="$emit('input', $event.target.value)"
+  />
 </template>
 
 <script>
@@ -13,6 +21,14 @@ export default {
       type: String,
       default: undefined,
     },
+    value: {
+      type: String,
+      default: undefined,
+    },
+    saved: {
+      type: Boolean,
+      default: false,
+    },
   },
 }
 </script>
@@ -25,7 +41,7 @@ export default {
     @apply text-black-600;
   }
 
-  &:read-only {
+  &-saved {
     @apply text-blue;
   }
 

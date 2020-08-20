@@ -5,12 +5,13 @@ export default function useCopy() {
     copied: false,
   })
 
-  const copySuccessed = () => {
+  const setCopied = () => {
     state.copied = true
+    setTimeout(() => (state.copied = false), 5000)
   }
 
   return {
     ...toRefs(state),
-    copySuccessed,
+    setCopied,
   }
 }

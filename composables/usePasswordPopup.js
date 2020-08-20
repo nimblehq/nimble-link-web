@@ -7,7 +7,7 @@ const state = reactive({
 })
 
 export default function usePasswordPopup() {
-  const copySuccessed = () => {
+  const setCopied = () => {
     state.passwordCopied = true
   }
 
@@ -31,6 +31,6 @@ export default function usePasswordPopup() {
     ...toRefs(state),
     openPasswordPopup,
     closePasswordPopup,
-    copySuccessed,
+    setCopied,
   }
 }

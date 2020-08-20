@@ -101,7 +101,7 @@ export default {
   setup(props) {
     dayjs.extend(relativeTime)
 
-    const { copied, copySuccessed } = useCopy()
+    const { copied, setCopied } = useCopy()
     const { toggleDropdown, dropdownOpened } = useDropdown()
     const { openPasswordPopup } = usePasswordPopup()
     const { toggleConfirmation } = useConfirmation()
@@ -127,7 +127,7 @@ export default {
     return {
       shortLinkUrl,
       copied,
-      copySuccessed,
+      setCopied,
       toggleDropdown,
       dropdownOpened,
       openPasswordPopup,

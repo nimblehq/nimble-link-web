@@ -47,7 +47,7 @@
               />
               <button
                 v-clipboard:copy="displayedPassword"
-                v-clipboard:success="copySuccessed"
+                v-clipboard:success="setCopied"
                 class="self-end py-4 bg-blue h-12 w-48 text-white leading-4 mt-8"
                 :disabled="passwordCopied"
               >
@@ -77,7 +77,7 @@ export default {
       passwordCopied,
       openPasswordPopup,
       closePasswordPopup,
-      copySuccessed,
+      setCopied,
     } = usePasswordPopup()
     return {
       displayedPassword,
@@ -85,7 +85,7 @@ export default {
       passwordCopied,
       openPasswordPopup,
       closePasswordPopup,
-      copySuccessed,
+      setCopied,
     }
   },
 }
