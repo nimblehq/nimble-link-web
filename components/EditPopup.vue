@@ -63,7 +63,7 @@
                   class="border-2 border-black w-full h-12 py-4 px-5"
                   type="text"
                   required="true"
-                  @keydown.space="(event) => event.preventDefault()"
+                  @keydown.space.prevent
                 />
                 <label class="mt-6 mb-2">Link password (Optional)</label>
                 <input

@@ -18,7 +18,7 @@
       <button
         v-if="password"
         class="border-2 w-16 h-8 border-blue text-blue rounded"
-        @click="openPasswordPopup(password)"
+        @click="showPasswordClickHandler"
       >
         View
       </button>
@@ -62,14 +62,14 @@
             <p
               class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue"
               role="menuitem"
-              @click="openEditPopup({ id, alias, password })"
+              @click="editMenuClickHandler"
             >
               Edit
             </p>
             <p
               class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue cursor-pointer"
               role="menuitem"
-              @click="toggleConfirmation(id)"
+              @click="deleteMenuClickHandler"
             >
               Delete
             </p>
@@ -108,6 +108,22 @@ export default {
     const { openEditPopup } = useEditPopup()
     const { shortLinkURL } = useLinks()
 
+    const editMenuClickHandler = () => {
+      openEditPopup({
+        id: props.id,
+        password: props.password,
+        alias: props.alias,
+      })
+    }
+
+    const deleteMenuClickHandler = () => {
+      toggleConfirmation(props.id)
+    }
+
+    const showPasswordClickHandler = () => {
+      openPasswordPopup(props.password)
+    }
+
     return {
       shortLinkURL,
       copied,
@@ -117,6 +133,9 @@ export default {
       openPasswordPopup,
       toggleConfirmation,
       openEditPopup,
+      editMenuClickHandler,
+      deleteMenuClickHandler,
+      showPasswordClickHandler,
     }
   },
   filters: {
