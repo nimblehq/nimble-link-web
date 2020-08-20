@@ -87,7 +87,7 @@
                   "
                   class="self-end py-4 bg-blue h-12 w-48 text-white leading-4 mt-8 rounded"
                 >
-                  Save & Copy
+                  Save &amp; Copy
                 </button>
               </div>
             </div>
