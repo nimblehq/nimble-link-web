@@ -8,7 +8,7 @@
     leave-to-class="opacity-0"
   >
     <div
-      v-if="passworddropdownOpened"
+      v-if="passwordDropdownOpened"
       class="fixed bottom-0 inset-x-0 sm:inset-0 px-4 pb-4 sm:flex sm:items-center sm:justify-center"
     >
       <div class="fixed inset-0 transition-opacity" @click="closePasswordPopup">
@@ -45,14 +45,13 @@
                 disabled="disabled"
                 :value="displayedPassword"
               />
-              <button
+              <CustomButton
                 v-clipboard:copy="displayedPassword"
                 v-clipboard:success="setCopied"
-                class="self-end py-4 bg-blue h-12 w-48 text-white leading-4 mt-8"
-                :disabled="passwordCopied"
+                class="self-end mt-8 btn-primary btn-lg w-48"
               >
-                {{ passwordCopied ? 'Copied' : 'Copy' }}
-              </button>
+                {{ copied ? 'Copied' : 'Copy' }}
+              </CustomButton>
             </div>
           </div>
         </div>
@@ -63,6 +62,7 @@
 
 <script>
 import usePasswordPopup from '@/composables/usePasswordPopup'
+import useCopy from '@/composables/useCopy'
 import CloseIcon from '~/assets/images/icons/close.svg?inline'
 
 export default {
@@ -71,20 +71,21 @@ export default {
     CloseIcon,
   },
   setup() {
+    const { copied, setCopied } = useCopy()
+
     const {
       displayedPassword,
-      passworddropdownOpened,
-      passwordCopied,
+      passwordDropdownOpened,
       openPasswordPopup,
       closePasswordPopup,
-      setCopied,
     } = usePasswordPopup()
+
     return {
       displayedPassword,
-      passworddropdownOpened,
-      passwordCopied,
+      passwordDropdownOpened,
       openPasswordPopup,
       closePasswordPopup,
+      copied,
       setCopied,
     }
   },

@@ -1,8 +1,5 @@
 <template>
   <div class="max-w-7xl mx-auto">
-    <h1 v-if="links.length > 0" class="mb-4 font-bold text-large leading-9">
-      Total {{ links.length }} links
-    </h1>
     <table class="w-full">
       <thead>
         <tr class="border-b">
@@ -13,8 +10,15 @@
           <th class="text-right text-xs font-medium leading-6">ACTION</th>
         </tr>
       </thead>
-      <tbody>
-        <LinkItem v-for="link in links" :key="link.id" v-bind="link" />
+      <tbody v-if="recent">
+        <UserLinkItem
+          v-for="link in recentLinks"
+          :key="link.id"
+          v-bind="link"
+        />
+      </tbody>
+      <tbody v-else>
+        <UserLinkItem v-for="link in links" :key="link.id" v-bind="link" />
       </tbody>
     </table>
 
@@ -31,15 +35,24 @@ import useLinks from '@/composables/useLinks'
 
 export default {
   middleware: ['auth'],
+
+  props: {
+    recent: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
   setup() {
-    const { links, fetchLinks, deleteLink, editLink } = useLinks()
+    const { links, fetchLinks, deleteLink, editLink, recentLinks } = useLinks()
 
     useFetch(fetchLinks)
 
     return {
-      links,
       deleteLink,
       editLink,
+      links,
+      recentLinks,
     }
   },
 }

@@ -15,13 +15,13 @@
       </p>
     </td>
     <td class="text-right">
-      <button
+      <CustomButton
         v-if="password"
-        class="border-2 w-16 h-8 border-blue text-blue rounded"
+        class="btn-secondary"
         @click="showPasswordClickHandler"
       >
         View
-      </button>
+      </CustomButton>
       <div v-else class="">
         No
       </div>
@@ -34,19 +34,16 @@
     </td>
     <td class="text-right">
       <div class="relative">
-        <button
+        <CustomButton
           v-clipboard:copy="shortLinkUrl(alias)"
           v-clipboard:success="setCopied"
-          class="border-2 w-16 h-8 border-blue text-blue rounded"
+          class="btn-secondary"
         >
           {{ copied ? 'Copied' : 'Copy' }}
-        </button>
-        <button
-          class="border-2 w-8 h-8 border-blue text-blue rounded"
-          @click="toggleDropdown"
-        >
+        </CustomButton>
+        <CustomButton class="btn-secondary" @click="toggleDropdown">
           ...
-        </button>
+        </CustomButton>
         <transition
           enter-active-class="transition ease-out duration-100"
           enter-class="transform opacity-0 scale-95"
@@ -60,7 +57,7 @@
             :toggle-function="toggleDropdown"
           >
             <p
-              class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue"
+              class="block px-4 py-2 font-medium text-sm text-left text-black hover:text-blue focus:text-blue cursor-pointer"
               role="menuitem"
               @click="editMenuClickHandler"
             >

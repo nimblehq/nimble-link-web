@@ -7,10 +7,13 @@
     leave-class="opacity-100"
     leave-to-class="opacity-0"
   >
-    <div v-if="linksCount > 0" class="mt-24 h-full relative">
+    <div v-show="linksCount > 0" class="mt-24 h-full relative">
       <div class="fixed left-0 w-full h-full bg-gray-200 -z-10"></div>
       <h1 class="mt-8 font-bold text-xl">Recent links</h1>
-      <GuestLinkList />
+      <div class="mt-6">
+        <UserLinkList v-if="$auth.loggedIn" :recent="true" />
+        <GuestLinkList v-else />
+      </div>
     </div>
   </transition>
 </template>
