@@ -15,6 +15,7 @@
               Recent links
             </h2>
             <nuxt-link
+              v-if="$auth.loggedIn"
               to="/links"
               class="text-blue text-right inline float-right leading-relaxed"
             >

@@ -27,7 +27,6 @@ const setCurrentLink = (value) => {
   } else {
     state.currentLink = Object.assign({}, value)
   }
-  console.log('hehe:', state.currentLink) // eslint-disable-line no-console
 }
 
 watch(
@@ -103,11 +102,10 @@ export default function useLinks() {
           [oldLinkIndex]: updatedLink,
         })
         setCurrentLink(
-          Object.assign(updatedLink, {
+          Object.assign({}, updatedLink, {
             originalUrl: shortLinkUrl(updatedLink.alias),
           })
         )
-        state.saved = true
       })
   }
 

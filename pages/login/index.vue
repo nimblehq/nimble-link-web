@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  layout: '',
   setup(_, context) {
     context.root.$router.push('/')
   },

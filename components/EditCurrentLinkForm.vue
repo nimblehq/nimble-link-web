@@ -26,11 +26,12 @@ import useCopy from '@/composables/useCopy'
 
 export default {
   setup(_props, { emit }) {
-    const { currentLink, editLink } = useLinks()
+    const { currentLink, editLink, setCurrentLink } = useLinks()
     const { setCopied } = useCopy()
     const saveCopyLink = () => {
       editLink(currentLink.value).then((data) => {
         setCopied(currentLink.value.originalUrl)
+        setCurrentLink({})
         emit('on-saved')
       })
     }
