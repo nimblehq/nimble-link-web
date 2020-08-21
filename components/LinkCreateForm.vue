@@ -11,6 +11,7 @@
           autofocus
           placeholder="Paste a long URL"
           class="w-full"
+          :error="error"
           :saved="saved"
         >
         </CustomInput>
@@ -27,26 +28,31 @@
         <CustomButton
           v-else
           class="btn-primary btn-lg w-full"
+          :disabled="error"
           @click="createLink"
         >
           Shorten
         </CustomButton>
       </div>
     </form>
+    <div v-if="error" class="mt-3 w-full">
+      <AlertIcon class="inline" />
+      The link you have entered is invalid, please try again
+    </div>
   </div>
 </template>
 
 <script>
 import useCopy from '@/composables/useCopy'
 import useLinks from '~/composables/useLinks'
-
+import AlertIcon from '~/assets/images/icons/alert.svg?inline'
 import LogoIcon from '~/assets/images/icons/logo.svg?inline'
 
 export default {
-  components: { LogoIcon },
+  components: { LogoIcon, AlertIcon },
 
   setup() {
-    const { createLink, currentLink, saved, shortLinkUrl } = useLinks()
+    const { createLink, currentLink, saved, shortLinkUrl, error } = useLinks()
     const { copied, setCopied } = useCopy()
 
     return {
@@ -56,6 +62,7 @@ export default {
       createLink,
       currentLink,
       shortLinkUrl,
+      error,
     }
   },
 }
