@@ -8,7 +8,7 @@ export default function useCopy() {
   const { $copyText } = getCurrentInstance()
 
   const setCopied = (value) => {
-    if (value !== undefined) {
+    if (typeof value === 'string') {
       $copyText(value)
     }
 
