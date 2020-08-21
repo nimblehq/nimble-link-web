@@ -33,6 +33,7 @@ const setCurrentLink = (value) => {
 watch(
   [() => state.currentLink.originalUrl, () => state.saved],
   ([link, _saved], [_preLink, preSaved]) => {
+    state.error = false
     if (preSaved) {
       state.saved = false
       state.currentLink = {
