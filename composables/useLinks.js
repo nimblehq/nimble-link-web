@@ -12,6 +12,7 @@ const state = reactive({
   recentLinks: [],
   currentLink: {},
   saved: false,
+  error: false,
 })
 
 const setRecentLinks = () => {
@@ -57,8 +58,9 @@ export default function useLinks() {
         state.links.sort((a, b) => (a.id < b.id ? 1 : -1))
         setRecentLinks()
         state.currentLink = {}
+        state.error = false
       })
-      .catch((_error) => {})
+      .catch((_error) => (state.error = true))
   }
 
   const createLink = async () => {
@@ -74,8 +76,9 @@ export default function useLinks() {
             canEdit: true,
           }
           state.saved = true
+          state.error = false
         })
-        .catch((_error) => {})
+        .catch((_error) => (state.error = true))
     }
   }
 
@@ -85,8 +88,9 @@ export default function useLinks() {
       .then(({ data }) => {
         state.links = state.links.filter((link) => link.id !== id)
         state.currentLink = {}
+        state.error = false
       })
-      .catch((_error) => {})
+      .catch((_error) => (state.error = true))
   }
 
   const editLink = async ({ id, password, alias }) => {
@@ -106,7 +110,9 @@ export default function useLinks() {
             originalUrl: shortLinkUrl(updatedLink.alias),
           })
         )
+        state.error = false
       })
+      .catch((_error) => (state.error = true))
   }
 
   const shortLinkUrl = (alias) => {
