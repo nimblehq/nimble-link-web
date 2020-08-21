@@ -30,7 +30,7 @@
 
     <PasswordPopup />
     <Confirmation :confirm-callback-function="deleteLink" />
-    <EditPopup :save-callback-function="editLink" />
+    <EditPopup />
   </div>
 </template>
 
@@ -50,13 +50,12 @@ export default {
   },
 
   setup() {
-    const { links, fetchLinks, deleteLink, editLink, recentLinks } = useLinks()
+    const { links, fetchLinks, deleteLink, recentLinks } = useLinks()
 
     useFetch(fetchLinks)
 
     return {
       deleteLink,
-      editLink,
       links,
       recentLinks,
     }

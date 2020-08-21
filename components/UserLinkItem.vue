@@ -103,14 +103,11 @@ export default {
     const { openPasswordPopup } = usePasswordPopup()
     const { toggleConfirmation } = useConfirmation()
     const { openEditPopup } = useEditPopup()
-    const { shortLinkUrl } = useLinks()
+    const { shortLinkUrl, setCurrentLink } = useLinks()
 
     const editMenuClickHandler = () => {
-      openEditPopup({
-        id: props.id,
-        password: props.password,
-        alias: props.alias,
-      })
+      setCurrentLink(props.id)
+      openEditPopup()
     }
 
     const deleteMenuClickHandler = () => {
