@@ -39,12 +39,8 @@
               />
             </div>
             <div class="flex p-10 flex-col">
-              <input
-                class="border-2 border-black w-full h-12 py-4 px-5 bg-gray-300"
-                type="text"
-                disabled="disabled"
-                :value="displayedPassword"
-              />
+              <CustomInput :value="displayedPassword" disabled class="w-full">
+              </CustomInput>
               <CustomButton
                 v-clipboard:copy="displayedPassword"
                 v-clipboard:success="setCopied"

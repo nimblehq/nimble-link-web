@@ -40,12 +40,13 @@
                 <a
                   class="text-blue"
                   target="_blank"
-                  :href="shortLinkUrl(alias)"
+                  :href="shortLinkUrl(currentLink.alias)"
                 >
-                  {{ shortLinkUrl(alias) }}
+                  {{ shortLinkUrl(currentLink.alias) }}
+                  <ExternalLinkIcon class="inline" />
                 </a>
                 <CustomButton
-                  v-clipboard:copy="shortLinkUrl(alias)"
+                  v-clipboard:copy="shortLinkUrl(currentLink.alias)"
                   v-clipboard:success="setCopied"
                   class="btn-secondary ml-8"
                 >
@@ -53,30 +54,7 @@
                 </CustomButton>
               </div>
               <hr />
-              <div class="flex flex-col">
-                <label class="mt-6 mb-2">Customize back-half</label>
-                <input
-                  v-model="alias"
-                  class="border-2 border-black w-full h-12 py-4 px-5"
-                  type="text"
-                  required="true"
-                  @keydown.space.prevent
-                />
-                <label class="mt-6 mb-2">Link password (Optional)</label>
-                <input
-                  v-model="password"
-                  class="border-2 border-black w-full h-12 py-4 px-5"
-                  type="password"
-                />
-
-                <CustomButton
-                  v-clipboard:copy="shortLinkUrl(alias)"
-                  v-clipboard:success="save"
-                  class="self-end mt-8 btn-primary btn-lg w-48"
-                >
-                  Save &amp; Copy
-                </CustomButton>
-              </div>
+              <EditCurrentLinkForm @on-saved="closeEditPopup" />
             </div>
           </div>
         </div>
@@ -90,56 +68,31 @@ import useEditPopup from '@/composables/useEditPopup'
 import useCopy from '@/composables/useCopy'
 import useLinks from '@/composables/useLinks'
 import CloseIcon from '~/assets/images/icons/close.svg?inline'
+import ExternalLinkIcon from '~/assets/images/icons/external-link.svg?inline'
 
 export default {
   middleware: ['auth'],
   components: {
     CloseIcon,
+    ExternalLinkIcon,
   },
 
   setup(props) {
     const { copied, setCopied } = useCopy()
 
-    const {
-      alias,
-      password,
-      id,
-      editPopupOpened,
-      openEditPopup,
-      closeEditPopup,
-    } = useEditPopup()
+    const { editPopupOpened, openEditPopup, closeEditPopup } = useEditPopup()
 
-    const { shortLinkUrl } = useLinks()
-
-    const save = () => {
-      props
-        .saveCallbackFunction({
-          id: id.value,
-          password: password.value,
-          alias: alias.value,
-        })
-        .then(closeEditPopup)
-    }
+    const { shortLinkUrl, currentLink } = useLinks()
 
     return {
       copied,
       setCopied,
-      alias,
-      password,
-      id,
       editPopupOpened,
       openEditPopup,
       closeEditPopup,
-      save,
+      currentLink,
       shortLinkUrl,
     }
-  },
-
-  props: {
-    saveCallbackFunction: {
-      type: Function,
-      required: true,
-    },
   },
 }
 </script>

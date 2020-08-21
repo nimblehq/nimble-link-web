@@ -18,7 +18,17 @@ const setRecentLinks = () => {
   state.recentLinks = state.links.slice(0, 3)
 }
 
-const linksCount = computed(() => state.recentLinks.length)
+const linksCount = computed(() => state.links.length)
+
+const setCurrentLink = (value) => {
+  if (typeof value === 'number') {
+    const link = state.links.find((link) => link.id === value)
+    state.currentLink = Object.assign({}, link)
+  } else {
+    state.currentLink = Object.assign({}, value)
+  }
+  console.log('hehe:', state.currentLink) // eslint-disable-line no-console
+}
 
 watch(
   [() => state.currentLink.originalUrl, () => state.saved],
@@ -75,6 +85,7 @@ export default function useLinks() {
       .delete(`/links/${id}`)
       .then(({ data }) => {
         state.links = state.links.filter((link) => link.id !== id)
+        state.currentLink = {}
       })
       .catch((_error) => {})
   }
@@ -91,10 +102,11 @@ export default function useLinks() {
         state.links = Object.assign([...state.links], {
           [oldLinkIndex]: updatedLink,
         })
-        state.currentLink = {
-          ...updatedLink,
-          originalUrl: shortLinkUrl(updatedLink.alias),
-        }
+        setCurrentLink(
+          Object.assign(updatedLink, {
+            originalUrl: shortLinkUrl(updatedLink.alias),
+          })
+        )
         state.saved = true
       })
   }
@@ -111,5 +123,6 @@ export default function useLinks() {
     editLink,
     shortLinkUrl,
     linksCount,
+    setCurrentLink,
   }
 }

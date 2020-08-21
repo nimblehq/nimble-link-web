@@ -63,7 +63,7 @@ export default {
   }
 
   &:disabled {
-    @apply bg-white-70 border-gray text-black-300 cursor-not-allowed;
+    @apply bg-white-70 text-black cursor-not-allowed;
   }
 
   &-xl {
