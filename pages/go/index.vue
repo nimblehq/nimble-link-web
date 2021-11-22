@@ -43,7 +43,7 @@ export default {
   components: { AlertIcon },
 
   setup() {
-    const { params, $axios } = useContext()
+    const { query, $axios } = useContext()
     const state = reactive({
       password: '',
       error: false,
@@ -55,7 +55,7 @@ export default {
       state.submitDisabled = true
 
       await $axios
-        .post(`links/${params.value.alias}`, { password: state.password })
+        .post(`links/${query.value.alias}`, { password: state.password })
         .then(({ data }) => {
           const { originalUrl } = humps.camelizeKeys(data)
           window.location.replace(originalUrl)
